@@ -1,0 +1,13 @@
+bin/
+target/
+*.iml
+*.pyc
+.idea/
+.settings/
+log/
+.classpath
+.project
+.pydevproject
+*.out
+*.lnk
+blog/__pycache__/
