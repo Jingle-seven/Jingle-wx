@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hellowDjango.iml" filepath="$PROJECT_DIR$/.idea/hellowDjango.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hiDjango.iml" filepath="$PROJECT_DIR$/.idea/hiDjango.iml" />
     </modules>
   </component>
 </project>

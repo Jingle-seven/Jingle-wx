@@ -1,10 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from blog.models import Article
+
+
 def hello(request):
-    resKv = {}
-    resKv["res"] = "sweet"
-    return render(request, "a.html", resKv)
+    res = []
+    res.append({"name":"Tom","age":18})
+    res.append("walking")
+    res.append("and dying")
+    postList = Article.objects.all()
+    return render(request, "home.html", {"resList": postList})
 
 def theJson(request):
     return HttpResponse('{"meta":{"num":1,"total":24},"data":[9,34,12,43,123,41,231,12]}')

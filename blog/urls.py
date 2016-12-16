@@ -14,7 +14,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+
+from blog import settings
 from blog import view1
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,4 +26,5 @@ urlpatterns = [
     url(r'add', view1.theAdd, name="add"),
     #从url中用正则表达式提取一个方法参数a
     url(r'add/(\d+)$', view1.theAdd2, name="add"),
+    url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.STATIC_URL}),
 ]

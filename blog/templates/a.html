@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Just test template</title>
+    <title>Test template</title>
     <style>
         body {
             background-color: aliceblue;
@@ -12,8 +12,15 @@
     </style>
 </head>
 <body>
-hi !
-<h1>Hello World!</h1>
-<strong>{{ res }}</strong>
+<h1>welcome!</h1>
+<strong>{{ resList }}</strong><p>
+
+{%for e in resList%}
+    {% if forloop.first %}
+        <strong>{{e.name}}</strong> is {{e.age}}<p>
+    {% else %}
+        {{e}}<p>
+    {% endif %}
+{%endfor%}
 </body>
 </html>
