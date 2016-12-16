@@ -19,7 +19,7 @@ article.title = "kill me inside"
 # filter ignore case
 a2 = Article.objects.filter(title__icontains="world")
 print(a2)
-a2[0].delete()
+# a2[0].delete()
 
 res3 = Article.objects.all()
 print(res3)
