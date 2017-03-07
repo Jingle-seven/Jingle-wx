@@ -12,7 +12,7 @@ def findUsers(userName, start=0, count=1):
     return data.decode("utf-8")
 
 
-def getConn(host='localhost',user='root',password='123456',db='world'):
+def getConn(host='localhost', user='root', password='123456', db='world'):
     conn = pymysql.connect(host=host,
                            user=user,
                            password=password,
@@ -22,40 +22,41 @@ def getConn(host='localhost',user='root',password='123456',db='world'):
     return conn;
 
 
-
-def writeUserToDB(userList,conn,targetUserName=""):
+def writeUserToDB(userList, conn, targetUserName=""):
     cursor = conn.cursor()
     for user in userList:
-        print(user["name"],end=" ")
+        print(user["name"], end=" ")
         if "loc_name" in user:
             locName = user["loc_name"]
         else:
             locName = "Unknown"
-        if (targetUserName!= "") & (targetUserName!=user["name"]):
+        if (targetUserName != "") & (targetUserName != user["name"]):
             continue
         try:
             sql = "insert into douban_user values(%d,'%s','%s','%s','%s','%s','%s')" \
-                  %(int(user["id"]),user["uid"],user["name"],locName,user["created"],user["signature"],
-                    user["desc"][0:100])
+                  % (int(user["id"]), user["uid"], user["name"], locName, user["created"], user["signature"],
+                     user["desc"][0:100])
             cursor.execute(sql)
             conn.commit()
         except Exception as e:
-            print("An error: ",end="")
+            print("An error: ", end="")
             print(e)
 
-def writeAllUserToDB(conditionUserName,targetUserName=""):
+
+def writeAllUserToDB(conditionUserName, targetUserName=""):
     conn = getConn(db="zipkin_test")
     indexData = findUsers(conditionUserName)
     indexMap = json.loads(indexData)
     total = indexMap["total"]
-    print("total "+str(total))
-    for s in range(0,total,100):
-        print("\n start "+str(s))
+    print("total " + str(total))
+    for s in range(0, total, 100):
+        print("\n start " + str(s))
         rawData = findUsers(conditionUserName, start=s, count=100)
         rawMap = json.loads(rawData)
         allUser = rawMap["users"]
-        writeUserToDB(allUser,conn,targetUserName)
+        writeUserToDB(allUser, conn, targetUserName)
     conn.close()
+
 
 writeAllUserToDB("默默")
 

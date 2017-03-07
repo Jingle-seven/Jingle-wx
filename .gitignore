@@ -10,4 +10,4 @@ log/
 .pydevproject
 *.out
 *.lnk
-blog/__pycache__/
+sever/__pycache__/

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from blog.models import Article
+from sever.models import Article
 
 
 def hello(request):

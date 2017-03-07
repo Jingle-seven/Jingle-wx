@@ -15,8 +15,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from blog import settings
-from blog import view1
+from sever import settings
+from sever import view1
 from django.conf.urls.static import static
 
 urlpatterns = [

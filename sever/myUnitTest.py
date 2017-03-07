@@ -4,12 +4,12 @@ import random
 import django
 from django.db.models import Count, Avg
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sever.settings")
 django.setup()
 
 import unittest
-import blog.models
-from blog.models import Article,Person
+import sever.models
+from sever.models import Article,Person
 
 
 # It said that django.test.TestCase should be used here ,but I run tests normally with unittest.TestCase

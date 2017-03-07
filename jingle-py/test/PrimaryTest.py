@@ -100,6 +100,7 @@ print(list1[1:3])
 print('abcde'[1:3])
 # 生成器generator,类似于延迟加载
 g = (x * x for x in range(10))
+x =[x * x for x in range(1, 11) if x % 2 == 0]
 for n in g:
     print(n)
 
