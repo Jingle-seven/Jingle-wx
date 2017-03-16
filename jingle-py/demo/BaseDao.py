@@ -2,16 +2,6 @@ import pymysql.cursors
 import configparser
 
 
-def getConnFromIniSection(file="conf.ini", section="mysql"):
-    cf = configparser.ConfigParser()
-    cf.read(file)
-    return pymysql.connect(host=cf.get(section, "host"),
-                           user=cf.get(section, "user"),
-                           password=cf.get(section, "password"),
-                           db=cf.get(section, "db"),
-                           charset=cf.get(section, "charset"),
-                           cursorclass=pymysql.cursors.DictCursor)
-
 
 def makeBaseSql(table, fields):
     sqlP1 = "insert into %s(" % (table)
@@ -41,15 +31,6 @@ def makeExeSql(table, fields, data):
     theSql = makeBaseSql(table, fields)
     resSql = theSql % data
     return resSql
-
-def exe(sql,args=None):
-    conn = getConnFromIniSection()
-    cur = conn.cursor()
-    rs = cur.execute(sql,args)
-    # cur.close()
-    conn.commit()
-    conn.close()
-    return rs
 
 if __name__ == "__main__":
     print("main")
