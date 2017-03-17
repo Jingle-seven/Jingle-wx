@@ -45,16 +45,19 @@ def testRand():
         ret = random.triangular(0, 100, 10)
         print(" random.triangular(0, 100, 10) = {0}".format(ret,))
 
+    print("=================================")
     # 高斯分布的随机数（稍快） random.gauss(mu, sigma)
-    for i in range(5):
-        ret = random.gauss(0, 1)
-        print(" random.gauss(0, 1) = {0}".format(ret,))
+    for i in range(20):
+        # ret = random.gauss(0, 1)
+        # print(" random.gauss(0, 1) = {0}".format(ret,))
 
         # beta β分布的随机数 random.betavariate(alpha, beta)
 
         # 指数分布的随机数 random.expovariate(lambd)
 
         # 伽马分布的随机数 random.gammavariate(alpha, beta)
+
+        print(int(10*random.gammavariate(8, 0.5)))
 
         # 对数正态分布的随机数 random.lognormvariate(mu, sigma)
 

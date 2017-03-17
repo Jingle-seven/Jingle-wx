@@ -80,9 +80,10 @@ class Inserter:
         c = self.conn.cursor()
         c.execute(sql,data)
         rs = c.fetchall()
+        self.conn.commit()
         return rs
 
 if __name__ == "__main__":
-    c = MysqlConnector(section="local_2")
+    c = Inserter(section="local_2")
     data = [("Tom",6,"beijing"),("Jim",9,"wulumuqi")]
     c.inser("user",data)
