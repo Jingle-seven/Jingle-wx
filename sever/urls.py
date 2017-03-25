@@ -16,15 +16,19 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from sever import settings
-from sever import view1
+from sever import view1,wxView
 from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    # name相当于接口规范,给别处(模板)使用,以后即使url变了,别处也不用改代码
     url(r'index$', view1.hello,name="index"),
-    url(r'data$', view1.theJson,name="data"),
-    url(r'add', view1.theAdd, name="add"),
+    url(r'data$', view1.theJson),
+    url(r'add', view1.theAdd),
     #从url中用正则表达式提取一个方法参数a
-    url(r'add/(\d+)$', view1.theAdd2, name="add"),
+    url(r'add/(\d+)$', view1.theAdd2),
+
+    url(r'wx/validate', wxView.validate),
+
     url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.STATIC_URL}),
 ]
