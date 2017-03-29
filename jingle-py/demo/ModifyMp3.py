@@ -36,7 +36,7 @@ def setTag(path, file, title="".encode("utf-8"), artist="".encode("utf-8"), albu
     data = getAllBinData(path, file)
     infoData = getLast128K(path, file)
     # ff = open(os.path.join(path, file), "wb")
-    print(infoData.decode("gb2312"))
+    print(infoData.decode("ISO-8859-1"))
     # print(data.decode("gb2312"))
     try:
         if infoData[0:3] != header:# 判断是否有id3v1数据if id3v1data[0:3]!=header:#倒数128字节不是以TAG开头的说明没有#按照id3v1的结构补充上去
