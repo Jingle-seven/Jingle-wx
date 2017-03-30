@@ -11,3 +11,9 @@ log/
 *.out
 *.lnk
 sever/__pycache__/
+**/dist/
+*.spec
+jingle-py/demo/__pycache__/
+**/build/
+jingle-py/test/__pycache__/
+sever/migrations/__pycache__/
