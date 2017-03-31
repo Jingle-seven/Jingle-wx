@@ -1,8 +1,9 @@
-import demo.BaseDao as dao
-import demo.MysqlConnector as JingleMysql
-import demo.JingleUtil as util
-import time
 import random
+import time
+
+import demo.JingleUtil as util
+import demo.MysqlConnector as JingleMysql
+
 
 # 20 - 60
 def getKafang():
