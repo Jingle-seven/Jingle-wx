@@ -60,9 +60,9 @@ def setWallPaper(imgPath):
 
 def paperSetter(period,index):
     while(True):
-        setWallPaper(getImgByApi(index))
+        # setWallPaper(getImgByApi(index))
         try:
-            # setWallPaper(getImgByApi(index))
+            setWallPaper(getImgByApi(index))
             pass
         except Exception as e:
             print(e)
