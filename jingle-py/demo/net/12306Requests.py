@@ -4,16 +4,20 @@ import time
 import requests
 import demo.net.EmailSender as messenger
 
+NAN_XIONG = "NCQ"
+GUANG_ZHOU = "GZQ"
 
-def getRawJson(date="2017-04-28", fromStt="GZQ", toStt="NCQ"):
+
+def getRawJson(date="2017-04-28", fromStt=GUANG_ZHOU, toStt=NAN_XIONG):
     ticketUrl = "https://kyfw.12306.cn/otn/leftTicket/query" \
                 "?leftTicketDTO.train_date=%s" \
                 "&leftTicketDTO.from_station=%s" \
                 "&leftTicketDTO.to_station=%s" \
-                "&purpose_codes=ADULT" % (date,fromStt,toStt)
+                "&purpose_codes=ADULT" % (date, fromStt, toStt)
 
     r2 = requests.get(ticketUrl, verify=False)
     return r2.json()
+
 
 def getTrainsInfo(rawJson):
     trainsInfo = []
@@ -21,10 +25,11 @@ def getTrainsInfo(rawJson):
         trainsInfo.append(i["queryLeftNewDTO"])
     return trainsInfo
 
+
 def hasTickets(trainInfo):
-    resTickets = trainInfo.get("yz_num","--")
-    if resTickets == "无" or resTickets == "--":
-        return False
+    # resTickets = trainInfo.get("yz_num", "--")
+    # if resTickets == "无" or resTickets == "--":
+    #     return False
     info = {}
     info["出发站"] = trainInfo["from_station_name"]
     info["始发站"] = trainInfo["start_station_name"]
@@ -40,32 +45,27 @@ def hasTickets(trainInfo):
     return info
 
 
-def watcher():
-    trainsIinfo = getTrainsInfo(getRawJson())
+def watcher(counter=0):
+    trainsIinfo = getTrainsInfo(getRawJson("2017-05-01", NAN_XIONG, GUANG_ZHOU))
     for i in trainsIinfo:
         info = hasTickets(i)
-        if info:
+        if info.get("硬座", "--") != "无":
             subject = "%s: %s > %s日%s去%s" \
                       % (info["列车"], info["硬座"], info["出发日期"][4:], info["出发时间"], info["到达站"],)
             messenger.sendEmail(subject, str(info))
             print(subject)
         else:
-            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+" 无票")
+            print(time.strftime("%Y-%m-%d %H:%M:%S ", time.localtime()) + info.get("列车")+" 无硬座票")
+    return counter
 
 if __name__ == "__main__":
-    while(True):
+    counter = 0
+    while (True):
         try:
             watcher()
         except Exception as e:
-            print(e)
-        time.sleep(60 * 10)
-
-
-
-
-
-
-
+            print("error: "+str(e))
+        time.sleep(60* 10)
 
     """{  
         "train_no": "240000G14104",          // 列车编号  

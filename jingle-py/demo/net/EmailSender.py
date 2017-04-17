@@ -17,7 +17,6 @@ def sendEmail(subj="Subject",content="Blank",to="xiong_jinhua@foxmail.com",acoun
         smtpObj.connect(acount["host"], 25)  # 25 为 SMTP 端口号
         smtpObj.login(acount["user"], acount["passwd"])
         smtpObj.sendmail(acount["user"], [to, ], message.as_string())
-        print("发送成功")
     except smtplib.SMTPException as e:
         print("Error: 无法发送邮件")
         raise e
