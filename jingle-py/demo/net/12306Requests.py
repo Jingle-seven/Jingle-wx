@@ -2,7 +2,7 @@
 
 import time
 import requests
-import demo.net.EmailSender as messenger
+import EmailSender as messenger
 
 NAN_XIONG = "NCQ"
 GUANG_ZHOU = "GZQ"
