@@ -6,6 +6,7 @@ import EmailSender as messenger
 
 NAN_XIONG = "NCQ"
 GUANG_ZHOU = "GZQ"
+GUANG_ZHOU_DONG = "GGQ"
 
 
 def getRawJson(date="2017-04-28", fromStt=GUANG_ZHOU, toStt=NAN_XIONG):
@@ -46,10 +47,11 @@ def hasTickets(trainInfo):
 
 
 def watcher(counter=0):
-    trainsIinfo = getTrainsInfo(getRawJson("2017-05-01", NAN_XIONG, GUANG_ZHOU))
+    trainsIinfo = getTrainsInfo(getRawJson("2017-05-01", NAN_XIONG, GUANG_ZHOU_DONG))
     for i in trainsIinfo:
         info = hasTickets(i)
-        if info.get("硬座", "--") != "无":
+        hardSeat = info.get("硬座", "--")
+        if hardSeat != "无" and hardSeat != "--":
             subject = "%s: %s > %s日%s去%s" \
                       % (info["列车"], info["硬座"], info["出发日期"][4:], info["出发时间"], info["到达站"],)
             messenger.sendEmail(subject, str(info))
