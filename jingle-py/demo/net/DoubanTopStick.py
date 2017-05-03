@@ -23,7 +23,7 @@ def loginDouban():
     s.headers.update(HEADERS)
     loginPage = s.get(loginUrl)
 
-    formData = dict(formData,**fillCaptcha(loginPage.text))
+    formData = dict(formData, **captchaDict(loginPage.text))
     print(formData)
 
     # 登录
@@ -37,7 +37,7 @@ def loginDouban():
     return False
 
 #获取验证码dict
-def fillCaptcha(pageText):
+def captchaDict(pageText):
     captchaIdPattern = r'<input type="hidden" name="captcha-id" value="\w{24}:en"/>'
     captchaImgPattern = r'https://www.douban.com/misc/captcha\?id=.{23,100}:en'
     captchaIdTags = re.findall(captchaIdPattern, pageText)
@@ -62,6 +62,7 @@ def topStick(ssn,topicId,comment="up"):
     ckPattern = r'name="ck" value="\w{0,10}"'
     ck = re.findall(ckPattern,topicPage.text)[0][17:-1]
     formData = {"ck": ck,"rv_comment": comment,}#"submit_btn":"加上去"}
+    formData = dict(formData, **captchaDict(topicPage.text))
     print(formData)
     # commentResult = ssn.post(url+"add_comment#last",formData,HEADERS)
     # print(re.findall('.{0,40}'+comment+'.{0,40}',commentResult.text))
