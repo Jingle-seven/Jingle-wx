@@ -49,7 +49,7 @@ def captchaDict(pageText):
         return {}
     captchaImgUrl = re.findall(captchaImgPattern, pageText)[0]
     return {'captcha-id': captchaIdTags[0][46:73],
-            'captcha-solution': inputCaptcha(captchaImgUrl, "G:/temp/captcha.jpg")}
+            'captcha-solution': inputCaptcha(captchaImgUrl, "captcha.jpg")}
 
 
 # 下载验证码图片, 等待输入验证码
