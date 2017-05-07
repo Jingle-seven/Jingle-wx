@@ -76,8 +76,8 @@ def topStick(ssn, topicId, comment):
 
 if __name__ == "__main__":
     userPwd = ("xiong_jinhua@foxmail.com","xz121542345")
-    topics = ["102130838","102179547"]
-    words = ["披星戴月地奔波","只为一扇窗","帮顶","随便一挥手就是漂亮的十五字","手动建楼","抱走楼主"]
+    topics = ["102257677","102179547"]
+    words = "披星戴月地奔波只为一扇窗帮顶随便一挥手就是漂亮的十五字"
     #登录
     loginSuc = loginDouban(userPwd[0],userPwd[1])
     while not loginSuc:
