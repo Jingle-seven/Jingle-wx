@@ -25,7 +25,9 @@ def getBooks(number, pwd):
 
 
 if __name__ == "__main__":
-    classToNum = {}
-    for classNum in range(1215421, 1215424):
-        list = [getBooks(i, 123456) for i in range(classNum * 100, classNum * 100 + 60)]
-        classToNum[classNum] = list
+    for classNum in range(1215423, 1215424):
+        for i in range(classNum * 100, classNum * 100 + 60):
+            try:
+                getBooks(i, 123456)
+            except Exception as e:
+                print(e)
