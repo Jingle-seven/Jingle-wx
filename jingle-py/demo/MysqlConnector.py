@@ -76,12 +76,37 @@ class Inserter:
         self.conn.commit()
         return rs
 
-    def inserOne(self,sql,data):
+    def insertOne(self,sql,data):
         c = self.conn.cursor()
         c.execute(sql,data)
         rs = c.fetchall()
         self.conn.commit()
         return rs
+
+class Finder:
+    def __init__(self, confFile="conf.ini", section="local_1"):
+        self.conn = self.getConnFromIniSection(confFile,section)
+
+    def getConnFromIniSection(self,file, section):
+        cf = configparser.ConfigParser()
+        cf.read(file)
+        return pymysql.connect(host=cf.get(section, "host"),
+                               user=cf.get(section, "user"),
+                               password=cf.get(section, "password"),
+                               db=cf.get(section, "db"),
+                               charset=cf.get(section, "charset"),
+                               cursorclass=pymysql.cursors.DictCursor)
+    def findAll(self,table):
+        cur = self.conn.cursor()
+        cur.execute("SELECT * FROM %s " % table)
+        for r in cur.fetchall():
+            yield r
+
+    def find(self,sql):
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        for r in cur.fetchall():
+            yield r
 
 if __name__ == "__main__":
     c = Inserter(section="local_2")
