@@ -89,7 +89,7 @@ def findBooks(finder, userId):
     return x, y
 
 
-def showBooks(userId, monthStep=2, yHeight=20):
+def showBooks(userId, monthStep=1, yHeight=20):
     finder = JingleMysql.Finder("conf.ini", "local_2")
     x, y = findBooks(finder, userId)
     if len(x) <=0:
@@ -97,11 +97,11 @@ def showBooks(userId, monthStep=2, yHeight=20):
         return
     # fig, axes = plt.subplots(ncols=2,figsize=(10, 30))
     # ax = axes[0]
-    fig, ax = plt.subplots(figsize=(10, 4))
+    fig, ax = plt.subplots(figsize=(15, 4))
     formatter = MyFormatter(x)
     ax.xaxis.set_major_formatter(formatter)
     ax.plot(np.arange(len(x)), y, 'o--')
-    ax.set_title(findName(finder, userId))
+    ax.set_title("[%s]在广金的借书情况"%findName(finder, userId))
 
     plt.xticks(np.arange(0, len(x), monthStep))
     plt.yticks(np.arange(0, yHeight, 5))
@@ -113,4 +113,4 @@ if __name__ == '__main__':
     print("start")
     # insertBookInfo('net/books/')
 
-    showBooks(121542345)
+    [showBooks(i) for i in range(121542345,121542346)]
