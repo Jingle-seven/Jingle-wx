@@ -1,8 +1,8 @@
 import random
 import time
 
-import demo.JingleUtil as util
-import demo.MysqlConnector as JingleMysql
+import util.JingleUtil as util
+import util.MysqlConnector as JingleMysql
 
 
 # 20 - 60

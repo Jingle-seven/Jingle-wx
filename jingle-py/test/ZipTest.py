@@ -5,7 +5,7 @@ import os
 # os.system("ls")
 
 # import shutil
-# shutil.copyfile('LibTest.py', 'LibTest2.py')
+# shutil.copyfile('ZipTest.py', 'LibTest2.py')
 # shutil.move('LibTest2.py', '../demo/LibTest2.py')
 
 import glob

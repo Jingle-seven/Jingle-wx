@@ -1,8 +1,12 @@
 # coding=utf-8
 
+import os
+import re
+
 from pylab import *
-import demo.MysqlConnector as JingleMysql
-import re, os,threading
+
+import util.MysqlConnector as JingleMysql
+
 mpl.rcParams['font.sans-serif'] = ['SimHei']  # 指定中文字体防止不显示中文
 
 
