@@ -64,7 +64,7 @@ def insertBookInfo(path):
         try:
             books = list(getLines(path + fileName, student))
             print("%s has %s records" % (student.name, len(books)))
-            inserter.inser("book", books)
+            inserter.insert("book", books)
         except Exception as e:
             print(e)
 

@@ -1,12 +1,12 @@
 import pymysql.cursors
 import configparser
 
+
 class Inserter:
-    def __init__(self, confFile="conf.ini", section="local_1"):
-        self.conn = self.getConnFromIniSection(confFile,section)
+    def __init__(self, confFile="conf.ini", section="local_2"):
+        self.conn = self.getConnFromIniSection(confFile, section)
 
-
-    def getConnFromIniSection(self,file, section):
+    def getConnFromIniSection(self, file, section):
         cf = configparser.ConfigParser()
         cf.read(file)
         return pymysql.connect(host=cf.get(section, "host"),
@@ -16,10 +16,10 @@ class Inserter:
                                charset=cf.get(section, "charset"),
                                cursorclass=pymysql.cursors.DictCursor)
 
-    def exe(self,sql,args=None):
+    def exe(self, sql, args=None):
         conn = self.getConnFromIniSection()
         cur = conn.cursor()
-        rs = cur.execute(sql,args)
+        rs = cur.execute(sql, args)
         # cur.close()
         conn.commit()
         # conn.close()
@@ -31,7 +31,6 @@ class Inserter:
         rs = cur.execute(sql, args)
         return rs
 
-
     def commit(self):
         self.conn.commit()
 
@@ -40,13 +39,13 @@ class Inserter:
 
     def makeBaseSql(self, tableName):
         cur = self.conn.cursor()
-        cur.execute("show columns from %s"%(tableName))
-        fs =[]
+        cur.execute("show columns from %s" % (tableName))
+        fs = []
         for f in cur.fetchall():
-           fs.append(f["Field"])
-        return self.baseSql(tableName,tuple(fs))
+            fs.append(f["Field"])
+        return self.baseSql(tableName, tuple(fs))
 
-    def baseSql(self,table,fields):
+    def baseSql(self, table, fields):
         sqlP1 = "insert into %s(" % (table)
         sqlP2 = ") values("
         if isinstance(fields, tuple):
@@ -65,29 +64,29 @@ class Inserter:
         resSql = sqlP1 + sqlP2 + ")"
         return resSql
 
-
-    def inser(self,tableName,dataList):
+    def insert(self, tableName, dataList):
         baseSql = self.makeBaseSql(tableName)
         c = self.conn.cursor()
         rs = ""
         for e in dataList:
-            c.execute(baseSql,e)
+            c.execute(baseSql, e)
             rs = c.fetchall()
         self.conn.commit()
         return rs
 
-    def insertOne(self,sql,data):
+    def insertOne(self, sql, data):
         c = self.conn.cursor()
-        c.execute(sql,data)
+        c.execute(sql, data)
         rs = c.fetchall()
         self.conn.commit()
         return rs
 
-class Finder:
-    def __init__(self, confFile="conf.ini", section="local_1"):
-        self.conn = self.getConnFromIniSection(confFile,section)
 
-    def getConnFromIniSection(self,file, section):
+class Finder:
+    def __init__(self, confFile="conf.ini", section="local_2"):
+        self.conn = self.getConnFromIniSection(confFile, section)
+
+    def getConnFromIniSection(self, file, section):
         cf = configparser.ConfigParser()
         cf.read(file)
         return pymysql.connect(host=cf.get(section, "host"),
@@ -96,19 +95,21 @@ class Finder:
                                db=cf.get(section, "db"),
                                charset=cf.get(section, "charset"),
                                cursorclass=pymysql.cursors.DictCursor)
-    def findAll(self,table):
+
+    def findAll(self, table):
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM %s " % table)
         for r in cur.fetchall():
             yield r
 
-    def find(self,sql):
+    def find(self, sql):
         cur = self.conn.cursor()
         cur.execute(sql)
         for r in cur.fetchall():
             yield r
 
+
 if __name__ == "__main__":
     c = Inserter(section="local_2")
-    data = [("Tom",6,"beijing"),("Jim",9,"wulumuqi")]
-    c.inser("user",data)
+    data = [("Tom", 6, "beijing"), ("Jim", 9, "wulumuqi")]
+    c.insert("user", data)
