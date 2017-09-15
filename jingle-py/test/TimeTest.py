@@ -17,6 +17,11 @@ print(ascTime)
 strTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 print(strTime)
 
+# 格式化时间转时间戳
+timeArray = time.strptime('09-15-2017 17:53:45', "%m-%d-%Y %H:%M:%S")
+timestamp = time.mktime(timeArray)
+print(timestamp)
+
 # 输出一个月的日历
 cal = calendar.month(2016, 10)
 print(cal)
@@ -26,6 +31,8 @@ sTime = time.clock()
 time.sleep(2)
 eTime = time.clock()
 print(eTime-sTime)
+
+
 
 print ("本地时间为 :", time.asctime(),time.ctime())
 print ("格式化的时间 :",time.strftime("%Y-%m-%d  %H:%M:%S", time.localtime()))
