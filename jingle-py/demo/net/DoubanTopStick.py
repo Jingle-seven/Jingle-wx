@@ -14,7 +14,7 @@ HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;
            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'}
 
 
-def loginDouban(user,pwd):
+def loginDouban(user, pwd):
     print("开始登录")
     loginUrl = 'https://accounts.douban.com/login'
     formData = {
@@ -34,7 +34,7 @@ def loginDouban(user,pwd):
     loginResult = s.post(loginUrl, formData)
     token = re.findall(r"我的豆瓣", loginResult.text)
     if (len(token) > 0):
-        print(re.findall(r"<span>.{1,20}的帐号</span>", loginResult.text),end="登录成功")
+        print(re.findall(r"<span>.{1,20}的帐号</span>", loginResult.text), end="登录成功")
         return s
     print("登录失败")
     return False
@@ -75,15 +75,15 @@ def topStick(ssn, topicId, comment):
 
 
 if __name__ == "__main__":
-    userPwd = ("xiong_jinhua@foxmail.com","xz121542345")
-    topics = ["102257677","102179547"]
+    userPwd = ("xiong_jinhua@foxmail.com", "xz121542345")
+    topics = ["102257677", "102179547"]
     words = "披星戴月地奔波只为一扇窗帮顶随便一挥手就是漂亮的十五字"
-    #登录
-    loginSuc = loginDouban(userPwd[0],userPwd[1])
+    # 登录
+    loginSuc = loginDouban(userPwd[0], userPwd[1])
     while not loginSuc:
-        loginSuc = loginDouban(userPwd[0],userPwd[1])
+        loginSuc = loginDouban(userPwd[0], userPwd[1])
 
-    #顶贴
+    # 顶贴
     while loginSuc:
         if 8 < time.localtime()[3] < 24:
             for i in topics:

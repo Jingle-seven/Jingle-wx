@@ -1,3 +1,4 @@
+# 可能是用于下载贴吧图片
 from urllib import request
 import re
 

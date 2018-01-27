@@ -1,3 +1,5 @@
+import collections
+
 # print函数的参数可以由逗号分隔，会自动连接
 start = 0
 end = 10
@@ -25,6 +27,11 @@ print(list3)
 # tuple is similar to list,but it can't be changed
 tuple1 = (1, 2, 3)
 print(tuple1)
+# namedtuple 给元组命名，类似数据类，比起一般元组可读性更好
+Student = collections.namedtuple("Stu","name age clazz")
+stu1 = Student("tom",14,1215423)
+print(stu1.name)
+print(stu1)
 # dictionary
 dic = {'bob': 12, 'nancy': 14, 'maggie': 'hoho'}
 print("DIC ----------------------> ",dic)
@@ -122,6 +129,7 @@ def add_some(*nums):
 print(add_some(1, 2, 3, ))
 
 # 其他特性
+print("OTHER ----------------------> ")
 # 切片
 print(list1[1:3])
 print('abcde'[1:3])
@@ -131,6 +139,9 @@ x = [x * x for x in range(1, 11) if x % 2 == 0]
 for n in g:
     print(n,end=" ")
 
+# join,split逆操作
+names = ["tom","nancy","tony"]
+print(" = ".join(names))
 try:
     1 / 0
 except ZeroDivisionError as e:
