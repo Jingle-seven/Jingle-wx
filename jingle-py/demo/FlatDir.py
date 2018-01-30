@@ -24,8 +24,11 @@ def listFiles(path):
 #         print(os.path.join(root,file))
 
 for k,v in listFiles(basePath).items():
-    # print("{} \t\t {}".format(k,v))
+    print("{} \t\t {}".format(k,v))
     # pathFile = os.path.split(k)
-    print("move [{}] ----------------> [{}]".format(k,os.path.join(basePath,v)))
+    # 把文件重命名，先去掉根路径
+    newFileName = k[len(basePath)+1:].replace("/",".").replace("\\",".")
+    # print(k[len(basePath)+1:].replace("/",".").replace("\\","."))
+    print("move [{}] ----------------> [{}]".format(k,os.path.join(basePath,newFileName)))
     # 此方法会把同名文件覆盖
-    shutil.move(k,os.path.join(basePath,v))
+    shutil.move(k,os.path.join(basePath,newFileName))

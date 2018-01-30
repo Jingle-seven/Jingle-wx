@@ -1,7 +1,10 @@
-import shutil
 
-dir="F:/temp/test/test0/as1.txt"
-shutil.move("F:/temp/test/test0/as1.txt","F:/temp/test/as1.txt")
+
+path="123456789"
+path2="12"
+print(path.replace("/",".").replace("\\",".").replace(":",""))
+print(path[len(path2)-len(path):])
+print(path[len(path2):])
 
 if __name__=="__main__":
     print("end")

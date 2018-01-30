@@ -1,8 +1,8 @@
-import collections
-
-# print函数的参数可以由逗号分隔，会自动连接
 start = 0
 end = 10
+list1 = [1, 2, 3, 4, 5]
+dic = {'bob': 12, 'nancy': 14, 'maggie': 'hoho'}
+# print函数有一个变长参数和seq（分隔符，默认空格）、end（结尾符，默认换行）、file（输出到哪，默认控制台）三个关键字参数
 print("start=", start)
 print('next')
 
@@ -10,51 +10,6 @@ print('next')
 print(1 / 2)
 print(1 // 2)
 print(2 // 3)
-
-# 数据存储
-list1 = [1, 2, 3, 4, 5]
-list1.append(6)
-list1 +=[7]
-list1.insert(0, 0)
-list1.pop(2)
-print("LIST ----------------------> ",list1)
-print(list1[2])
-# list生成式,10以内偶数的平方,全排列
-list2 = [x * x for x in range(1, 11) if x % 2 == 0]
-list3 = [m + n for m in 'ABC' for n in 'XYZ']
-print(list2)
-print(list3)
-# tuple is similar to list,but it can't be changed
-tuple1 = (1, 2, 3)
-print(tuple1)
-# namedtuple 给元组命名，类似数据类，比起一般元组可读性更好
-Student = collections.namedtuple("Stu","name age clazz")
-stu1 = Student("tom",14,1215423)
-print(stu1.name)
-print(stu1)
-# dictionary
-dic = {'bob': 12, 'nancy': 14, 'maggie': 'hoho'}
-print("DIC ----------------------> ",dic)
-print(dic['bob'])
-print(dic.get('bo'))
-dic.pop('bob')
-print(dic)
-for key in dic:
-    print(key)
-for value in dic.values():
-    print(value)
-for k, v in dic.items():
-    print(k, '=', v)
-# set
-s1 = {1, 3, 5, 7, }
-s2 = {2, 4, 6, 7}
-s3 = s1 & s2
-s4 = s1 | s2
-print("SET ----------------------> ",s3)
-print(s4)
-s4.add(8)
-s4.remove(3)
-print(s4)
 
 #输出格式化及字符串方法
 print("FORMAT ----------------------> ")
@@ -94,11 +49,11 @@ for num in list1:
     num = num + 1
 print(list1)
 
-sum = 0
+theSum = 0
 count = 0
 list100 = list(range(1001))
-while sum < 10000:
-    sum = sum + list100[count]
+while theSum < 10000:
+    theSum += list100[count]
     count += 1
 print('sum is not bigger than 10000 until %dth num' % count)
 
@@ -108,7 +63,9 @@ def xz_add(a, b):
     # 可以返回多个值,实际上是返回一个tuple按顺序赋值到变量
     return a + b, a - b
     pass  # 无意义
-a, b = xz_add(23, 67)
+# 调用函数时可以用*将元组或者列表绑定到位置参数，用**绑定dict和关键字参数
+tp = tuple(list1[:2])
+a, b = xz_add(*tp)
 print(b, a)
 
 # 乘方递归实现,默认次数参数为2
@@ -120,13 +77,21 @@ def xz_pow(x, n=2):
     pass
 print(xz_pow(4))
 
-# 可选可变参数
-def add_some(*nums):
-    sum = 0
+# 数量可变的位置参数
+def add_some(who ,*nums):
+    mySum = 0
     for n in nums:
-        sum = sum + n
-    return sum
-print(add_some(1, 2, 3, ))
+        mySum = mySum + n
+    return who + str(mySum)
+print(add_some("AHA! ", 1, 2, 3))
+
+# 数量可变的关键字参数
+def witness(me, **who):
+    print("%s saw "%me,end="")
+    for k,v in who.items():
+        print("{} the {} ".format(k,v),end="")
+    print("flew together")
+witness("Tom",阿尔托利亚="saber",英灵卫宫="archer",长江骑士="Berserker")
 
 # 其他特性
 print("OTHER ----------------------> ")
