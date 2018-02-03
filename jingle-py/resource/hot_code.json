@@ -1,0 +1,7 @@
+{
+"circleArea":
+"import math \ndef circleArea(r): return math.pi * r * r",
+
+"sphereVolume":
+"import math \ndef sphereVolume(r):return math.pi * r * r * r *4/3"
+}

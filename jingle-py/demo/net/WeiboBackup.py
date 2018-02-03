@@ -6,7 +6,7 @@ HEADERS = {'Cache-Control': 'no-store',
            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                          'AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
-           'Cookie': open("weibo_cookie", "r").read()}
+           'Cookie': open("../../resource/weibo_cookie", "r").read()}
 
 
 def getRawMsg(page):

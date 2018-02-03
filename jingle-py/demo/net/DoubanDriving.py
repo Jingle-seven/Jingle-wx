@@ -15,7 +15,7 @@ HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;
            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                          'AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
-           'Cookie':open("cookie","r").read()
+           'Cookie':open("../../resource/douban_cookie","r").read()
            }
 RAWHTML = """<html><head>
                 <meta charset="UTF-8"> <!-- for HTML5 -->
@@ -33,7 +33,7 @@ def getTopicsInPage(start):
         print("禁止访问403")
     for i in soup.find_all('a',
                            href=re.compile(r'https://www.douban.com/group/topic/\d{8,9}/'),
-                           title=re.compile(r'.{0,20}[车].{0,20}')):
+                           title=re.compile(r'.{0,20}[片].{0,20}')):
         print(i)
         yield i
 
@@ -66,8 +66,9 @@ def appendTags(rawSoup,linkTags):
 
 if __name__ == "__main__":
     print("start...")
+    # print(open("../../resource/cars.html",encoding="utf-8").readlines())
     rawSoup = bs4.BeautifulSoup(RAWHTML, "html.parser")
     for carTags in scanPages(1000):
         resSoup = appendTags(rawSoup,carTags)
-        open("cars.html", "w", encoding="utf-8").write(resSoup.prettify())
+        open("../../resource/cars.html", "w", encoding="utf-8").write(resSoup.prettify())
     print("end!")

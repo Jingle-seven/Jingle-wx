@@ -3,7 +3,7 @@ import configparser
 
 
 class Inserter:
-    def __init__(self, confFile="conf.ini", section="local_2"):
+    def __init__(self, confFile="../resource/conf.ini", section="local_2"):
         self.conn = self.getConnFromIniSection(confFile, section)
 
     def getConnFromIniSection(self, file, section):
@@ -83,7 +83,7 @@ class Inserter:
 
 
 class Finder:
-    def __init__(self, confFile="conf.ini", section="local_2"):
+    def __init__(self, confFile="../resource/conf.ini", section="local_2"):
         self.conn = self.getConnFromIniSection(confFile, section)
 
     def getConnFromIniSection(self, file, section):
