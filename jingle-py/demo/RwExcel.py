@@ -1,10 +1,11 @@
-#coding=utf-8
+#coding=utf-8、
+# pip3 install xlrd,xlwt
 import xlrd
 import xlwt
 
 #打开Excel文件读取数据
 
-data = xlrd.open_workbook('G:/temp/jhist统计.xlsx')
+data = xlrd.open_workbook('../resource/income_tax.xlsx')
 
 
 #获取一个工作表
@@ -30,6 +31,6 @@ for i in range(table.nrows):
 workBook = xlwt.Workbook()
 sheet = workBook.add_sheet("工作表1")
 sheet.write(0,1,"ganjuehaolihai")
-workBook.save("G:/temp/test.xls")
+workBook.save("../resource/test.xls")
 
 
