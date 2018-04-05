@@ -3,21 +3,25 @@ import os
 
 # -*- coding: cp936 -*-
 import os
-path = "F:\\DOC\\desktop\\CustomEmotions\\"
-prefix = "亚纪录音_"
+path = "G:\\xunlei\\net-photo\\Menhera-chan - SR汉化"
+prefix = "menhera-"
+midName = ""
+suffix = ".jpg"
 counter = 0
 
-def codition(fileName):
-    return fileName.find(".") < 0
+def condition(fileName):
+    return fileName.find(".") != 0
 
 fileList = os.listdir(path)
+print(fileList)
 for file in fileList:
-    if codition(file):
-        # newName = prefix + str(fileList.index(file))+".mp3"
-        newName = str(file)[:15]+".gif"
+    midName = str(fileList.index(file))
+    if condition(file):
+        newName = prefix + midName + suffix
+        print(newName)
         try:
-            os.rename(path + file,path + newName)
-            print("%s renamed to %s"%(str(file),newName))
+            os.rename(path+"/"+file,path +"/"+ newName)
+            print("%s > %s"%(str(file),newName))
             counter+=1
         except Exception as e:
             print(e)
