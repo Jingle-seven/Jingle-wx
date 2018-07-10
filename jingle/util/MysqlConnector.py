@@ -16,21 +16,6 @@ class Inserter:
                                charset=cf.get(section, "charset"),
                                cursorclass=pymysql.cursors.DictCursor)
 
-    def exe(self, sql, args=None):
-        conn = self.getConnFromIniSection()
-        cur = conn.cursor()
-        rs = cur.execute(sql, args)
-        # cur.close()
-        conn.commit()
-        # conn.close()
-        return rs
-
-    def exeNotCommit(self, sql, args=None):
-        conn = self.getConnFromIniSection()
-        cur = conn.cursor()
-        rs = cur.execute(sql, args)
-        return rs
-
     def commit(self):
         self.conn.commit()
 

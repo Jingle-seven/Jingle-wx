@@ -1,8 +1,8 @@
 import random
 import time
 
-import util.JingleUtil as util
-import util.MysqlConnector as JingleMysql
+import jingle.util.JingleUtil as util
+import jingle.util.MysqlConnector as JingleMysql
 
 
 # 20 - 60
@@ -40,12 +40,12 @@ for i in range(0, 20):
     staSpanData = []
     try:
         traceData.append((tsId,traceMd5,stime,duration,stime+duration,0))
-        connector.inserOne(tracesSql,(tsId,traceMd5,stime,duration,stime+duration,0))
+        connector.insertOne(tracesSql,(tsId,traceMd5,stime,duration,stime+duration,0))
         spanNum = random.randint(2,5)
         for j in range(1,spanNum):
             spanData.append((tsId,tsId+j*100,util.ipTpInt(ipv4),spanName,stime,duration/spanNum,time.time()))
-            connector.inserOne(spansSql,(tsId,tsId+j*100,util.ipTpInt(ipv4),spanName,stime,duration/spanNum,time.time()))
-        connector.inserOne(staSpanSql, (i, stime, etime, spanName, callNum, avgTime, tsId, slowTime, ipv4))
+            connector.insertOne(spansSql,(tsId,tsId+j*100,util.ipTpInt(ipv4),spanName,stime,duration/spanNum,time.time()))
+        connector.insertOne(staSpanSql, (i, stime, etime, spanName, callNum, avgTime, tsId, slowTime, ipv4))
         staSpanData.append((i, stime, etime, spanName, callNum, avgTime, tsId, slowTime, ipv4))
     except Exception as e:
         print(e)

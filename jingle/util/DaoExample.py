@@ -1,11 +1,11 @@
 # coding=utf-8
-import util.MysqlConnector as dao
+from . import MysqlConnector
 
-ins = dao.Inserter()
+ins = MysqlConnector.Inserter()
 tp = (1215123,"tom",3,"伦敦")
 ins.insert("student",[tp])
 
-fin = dao.Finder()
+fin = MysqlConnector.Finder()
 for s in fin.findAll("student"):
     print(s)
 

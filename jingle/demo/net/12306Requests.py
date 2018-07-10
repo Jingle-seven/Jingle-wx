@@ -2,7 +2,7 @@
 
 import time
 import requests
-import EmailSender as messenger
+import jingle.util.EmailSender as messenger
 
 NAN_XIONG = "NCQ"
 GUANG_ZHOU = "GZQ"
