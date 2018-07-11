@@ -1,3 +1,4 @@
-### How to package
-pyinstaller xxx.py  -F 
+### How to package  
+pip install pyinstaller  
+pyinstaller -F xxx.py   
 
