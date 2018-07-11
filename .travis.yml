@@ -9,7 +9,7 @@ install:
 # command to run tests
 script:
   # ignore warn,refactor, convention, show error only
-  - pylint ./jingle --disable=W,R,C,I --ignore *WallPaper*.py
+  - pylint ./jingle --disable=W,R,C,I --ignore WallPaperPy2.py,WallPaper.py,WallPaperBing.py
 
 
 notifications:
