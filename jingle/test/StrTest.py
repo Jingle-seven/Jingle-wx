@@ -5,8 +5,11 @@
 # 不过py中并没有byte类型,py包含三种不可变类型Number,String,Tuple,三种可变类型List,Dictionary,Set
 # 其中Number类型包括 int,float,bool,complex（复数）
 
-print(bytes('ab可以',encoding='utf-16'))
-print('ab'.encode('utf-8'))
-print('可以'.encode('utf-8'))
-print('ab'.encode('utf-16'))
-print('可以'.encode('utf-16'))
+print('a'.encode('utf-8'))# utf-8保存英文字符和数字等ASCII字符只需一个字节
+print('可'.encode('utf-8'))# utf-8保存日常非ASCII字符需三字节
+print('a'.encode('gbk'))# gbk保存英文字符和数字等ASCII字符只需一个字节
+print('可'.encode('gbk'))# utf-8保存汉字需两字节
+# utf-16(在65535字元以下可以等同于unicode,UCS-2)保存英文字符和数字等ASCII字符需两个字节.
+# 这里出现了三个字节,第一个字节应该是用来标识大小端
+print('a'.encode('utf-16'))
+print('可'.encode('utf-16'))# utf-16保存日常非ASCII字符需两字节或四字节
