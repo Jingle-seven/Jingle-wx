@@ -6,7 +6,7 @@ import sys
 
 
 def genPwd(rawPwd):
-    uniPwd = 0b0
+    uniPwd = 0b0 #二进制的0
     for i in rawPwd:
         uniPwd ^= ord(i)
         # print(uniPwd)
