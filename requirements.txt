@@ -1,5 +1,5 @@
 
-requests==2.19.1
+requests==2.20.0
 pylint==1.9.2
 beautifulsoup4==4.6.0
 # pypiwin32==223 #不知为何,travis-ci中无法下载这个依赖
