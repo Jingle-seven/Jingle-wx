@@ -1,0 +1,18 @@
+
+language: python
+python:
+  - "3.5"
+  - "3.6"
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  # ignore warn,refactor, convention, show error only
+  - pylint ./jingle --disable=W,R,C,I --ignore WallPaperPy2.py,WallPaper.py,WallPaperBing.py
+
+
+notifications:
+  slack:
+    on_success: never
+    on_failure: always
