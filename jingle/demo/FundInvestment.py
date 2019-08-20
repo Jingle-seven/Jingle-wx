@@ -3,7 +3,8 @@
 # 总金额投资系数乘以原投资金额,作为计划投资金额
 # 以最低的差距作为0, 其他差距减去最低差距作为权重, 算出所有指数占总投资金额的百分比
 # 将百分比乘以计划投资金额, 得出各指数投入金额
-import xlrd,xlwt,time
+# import xlrd,xlwt
+import time,openpyxl
 
 # 指数类，包含指数当前点数和最终投资金额等信息
 class IndexToMa250:
@@ -47,40 +48,40 @@ def calculateFinalMoney(someIndexes):
         print("%s:\t %.2f"% (i.name,i.finalMoney))
 
 def writeExcel(sIdxes):
-    wbook = None
-    excelPath = '../resource/定投记录.xls'
+    excelPath = '../resource/定投记录.xlsx'
     nowDateStr = time.strftime("%Y-%m-%d", time.localtime())
+    nowYearStr = time.strftime("%Y", time.localtime())
     totalMoney = 0
     detailSheetRowNames = ["指数名","指数值","年线","偏离程度","投资因子","投资金额"]
-    summarySheetRowNames = ["年月","总金额"]#汇总表的各列名
+    summarySheetRowNames = ["日期","总金额"]#汇总表的各列名
     for i in sIdxes:
         summarySheetRowNames.append(i.name)
         totalMoney = totalMoney + i.finalMoney
-    try:
-        wbook = xlrd.open_workbook(excelPath)
+    try: wbook = openpyxl.load_workbook(excelPath)
     except FileNotFoundError as e:
-        wbook = xlwt.Workbook()
+        wbook = openpyxl.Workbook()
         # 表头列名
-        sSheet = wbook.add_sheet(time.strftime("%Y", time.localtime()))
-        dSheet = wbook.add_sheet(nowDateStr)
-        for i in summarySheetRowNames: sSheet.write(0,summarySheetRowNames.index(i),i) #行 列 内容
-        for i in detailSheetRowNames: dSheet.write(0,detailSheetRowNames.index(i),i)
+        sSheet = wbook.create_sheet(nowYearStr)
+        for i in summarySheetRowNames: sSheet.cell(1,summarySheetRowNames.index(i)+1).value = i #行 列 内容
         wbook.save(excelPath)
-    wbook = xlrd.open_workbook(excelPath)
-    sSheet = wbook.sheets()[0]
-    dSheet = wbook.sheet_by_name(nowDateStr)
-    print(dSheet.name)
+    sSheet = wbook[nowYearStr] #汇总表
+    if sSheet.cell(sSheet.max_row,1).value == nowDateStr:nowSSheetRow = sSheet.max_row
+    else: nowSSheetRow = sSheet.max_row + 1 #如果汇总表的最后一行的日期是今天，那么覆盖其数据，因为一天最多投一次
+    sSheet.cell(nowSSheetRow,1).value = nowDateStr #填写汇总表数据,日期和总金额
+    sSheet.cell(nowSSheetRow,2).value = round(totalMoney,1)
+    try: dSheet = wbook[nowDateStr] #明细表,存在的话就修改，不存在就新建一个
+    except KeyError as e: dSheet = wbook.create_sheet(nowDateStr)
+    for i in detailSheetRowNames: dSheet.cell(1,detailSheetRowNames.index(i)+1).value = i
     for idx in sIdxes:
-        print(idx.name,sIdxes.index(idx))
-        dSheet.put_cell(sIdxes.index(idx),0,1,idx.name,0)
-        dSheet.put_cell(sIdxes.index(idx),1,1,idx.index,0)
-        dSheet.put_cell(sIdxes.index(idx),2,1,idx.MA250,0)
-        dSheet.put_cell(sIdxes.index(idx),3,1,idx.investmentFactor,0)
-        dSheet.put_cell(sIdxes.index(idx),4,1,idx.advanceFactor,0)
-        dSheet.put_cell(sIdxes.index(idx),5,1,idx.finalMoney,0)
-    dSheet.put_cell(0, 0, 1, "米", 0)
-    print(dSheet.cell(0,0).value)
-    # wbook.save(excelPath)
+        rowNum = sIdxes.index(idx)+2
+        dSheet.cell(rowNum,1).value = idx.name
+        dSheet.cell(rowNum,2).value = idx.index
+        dSheet.cell(rowNum,3).value = idx.MA250
+        dSheet.cell(rowNum,4).value = idx.investmentFactor
+        dSheet.cell(rowNum,5).value = idx.advanceFactor
+        dSheet.cell(rowNum,6).value = idx.finalMoney
+        sSheet.cell(nowSSheetRow,summarySheetRowNames.index(idx.name) + 1).value = round(idx.finalMoney,1)
+    wbook.save(excelPath)
     print("ok")
 
 if __name__ == "__main__":
@@ -90,6 +91,6 @@ if __name__ == "__main__":
         IndexToMa250("沪深300",3633,3486),
         IndexToMa250("红利机会",7453,8142),
         IndexToMa250("深证F60",7198,6642),]
-    # calculateFinalMoney(indexes)
+    calculateFinalMoney(indexes)
     writeExcel(indexes)
 
