@@ -4,7 +4,7 @@
 # 以最低的差距作为0, 其他差距减去最低差距作为权重, 算出所有指数占总投资金额的百分比
 # 将百分比乘以计划投资金额, 得出各指数投入金额
 # import xlrd,xlwt
-import time,openpyxl
+import time,openpyxl,tushare
 
 # 指数类，包含指数当前点数和最终投资金额等信息
 class IndexToMa250:
@@ -58,20 +58,23 @@ def writeExcel(sIdxes):
         summarySheetRowNames.append(i.name)
         totalMoney = totalMoney + i.finalMoney
     try: wbook = openpyxl.load_workbook(excelPath)
-    except FileNotFoundError as e:
+    except FileNotFoundError as e: #文件不存在就创建新文件
         wbook = openpyxl.Workbook()
-        # 表头列名
-        sSheet = wbook.create_sheet(nowYearStr)
-        for i in summarySheetRowNames: sSheet.cell(1,summarySheetRowNames.index(i)+1).value = i #行 列 内容
+        sSheet = wbook.create_sheet(nowYearStr) # 汇总表summarySheet
+        for i in summarySheetRowNames: sSheet.cell(1,summarySheetRowNames.index(i)+1).value = i #汇总表表头
         wbook.save(excelPath)
-    sSheet = wbook[nowYearStr] #汇总表
-    if sSheet.cell(sSheet.max_row,1).value == nowDateStr:nowSSheetRow = sSheet.max_row
-    else: nowSSheetRow = sSheet.max_row + 1 #如果汇总表的最后一行的日期是今天，那么覆盖其数据，因为一天最多投一次
+    sSheet = wbook[nowYearStr]
+    #如果汇总表的最后一行的日期是今天，那么覆盖其数据，因为一天最多一次
+    if sSheet.cell(sSheet.max_row,1).value == nowDateStr:
+        nowSSheetRow = sSheet.max_row
+    else:
+        nowSSheetRow = sSheet.max_row + 1
     sSheet.cell(nowSSheetRow,1).value = nowDateStr #填写汇总表数据,日期和总金额
     sSheet.cell(nowSSheetRow,2).value = round(totalMoney,1)
-    try: dSheet = wbook[nowDateStr] #明细表,存在的话就修改，不存在就新建一个
-    except KeyError as e: dSheet = wbook.create_sheet(nowDateStr)
-    for i in detailSheetRowNames: dSheet.cell(1,detailSheetRowNames.index(i)+1).value = i
+    try: dSheet = wbook[nowDateStr] #明细表detailSheet,存在的话就修改，不存在就新建一个
+    except KeyError as e:
+        dSheet = wbook.create_sheet(nowDateStr)
+    for i in detailSheetRowNames: dSheet.cell(1,detailSheetRowNames.index(i)+1).value = i #明细表表头
     for idx in sIdxes:
         rowNum = sIdxes.index(idx)+2
         dSheet.cell(rowNum,1).value = idx.name
@@ -83,7 +86,12 @@ def writeExcel(sIdxes):
         sSheet.cell(nowSSheetRow,summarySheetRowNames.index(idx.name) + 1).value = round(idx.finalMoney,1)
     wbook.save(excelPath)
     print("ok")
-
+def getShareData():
+    print()
+    data = tushare.get_hist_data('600104')
+    df = tushare.pro_bar(ts_code='000001.SZ', start_date='20180101', end_date='20181011', ma=[5, 20, 50])
+    print(data)
+    print(df)
 if __name__ == "__main__":
     rawMoney = 1000 #基准定投金额
     indexes = [
@@ -91,6 +99,7 @@ if __name__ == "__main__":
         IndexToMa250("沪深300",3633,3486),
         IndexToMa250("红利机会",7453,8142),
         IndexToMa250("深证F60",7198,6642),]
-    calculateFinalMoney(indexes)
-    writeExcel(indexes)
+    getShareData()
+    # calculateFinalMoney(indexes)
+    # writeExcel(indexes)
 
