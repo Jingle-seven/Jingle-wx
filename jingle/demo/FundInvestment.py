@@ -5,6 +5,7 @@
 # 将百分比乘以计划投资金额, 得出各指数投入金额
 # import xlrd,xlwt
 import time,openpyxl,tushare
+tushare.set_token('cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
 
 # 指数类，包含指数当前点数和最终投资金额等信息
 class IndexToMa250:
@@ -87,7 +88,7 @@ def writeExcel(sIdxes):
     wbook.save(excelPath)
     print("ok")
 def getShareData():
-    print()
+    # print('tushare token:','cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
     data = tushare.get_hist_data('600104')
     df = tushare.pro_bar(ts_code='000001.SZ', start_date='20180101', end_date='20181011', ma=[5, 20, 50])
     print(data)
