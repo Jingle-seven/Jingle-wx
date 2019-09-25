@@ -52,11 +52,11 @@ def showMy():
     X = range(-20,21)
     plot(X,[i*i*i + 8*i*i -100*i for i in X])
     ax = gca()
-    ax.spines['right'].set_color('none')
+    ax.spines['right'].set_color('none')#去右边框
     ax.spines['top'].set_color('none')
-    ax.xaxis.set_ticks_position('bottom')
-    ax.spines['bottom'].set_position(('data',0))
-    ax.yaxis.set_ticks_position('left')
+    # ax.xaxis.set_ticks_position('bottom')
+    ax.spines['bottom'].set_position(('data',0))#底线设置为0
+    # ax.yaxis.set_ticks_position('left')
     ax.spines['left'].set_position(('data',0))
     show()
 if __name__ == "__main__":

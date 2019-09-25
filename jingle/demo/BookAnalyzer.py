@@ -82,11 +82,11 @@ class MyFormatter(Formatter):
 
 
 def findName(finder, userId):
-    return finder.find("select name from user where id = %s" % userId).__next__()["name"]
+    return finder.find("select user_name from book where id = %s" % userId).__next__()["user_name"]
 
 
 def findBooks(finder, userId):
-    myBooks = list(finder.find("select DATE_FORMAT(time,'%%Y%%m') months,count(*) count from book "
+    myBooks = list(finder.find("select DATE_FORMAT(date,'%%Y%%m') months,count(*) count from book "
                                "where user_id=%s group by months;" % userId))
     x = list(i['months'] for i in myBooks)
     y = list((int(i['count']) // 2) for i in myBooks)
@@ -94,7 +94,7 @@ def findBooks(finder, userId):
 
 
 def showBooks(userId, monthStep=1, yHeight=20):
-    finder = JingleMysql.Finder("conf.ini", "local_2")
+    finder = JingleMysql.Finder("../resource/conf.ini", "local_2")
     x, y = findBooks(finder, userId)
     if len(x) <=0:
         print("学号 %s 的数据不存在"% userId)
@@ -105,7 +105,8 @@ def showBooks(userId, monthStep=1, yHeight=20):
     formatter = MyFormatter(x)
     ax.xaxis.set_major_formatter(formatter)
     ax.plot(np.arange(len(x)), y, 'o--')
-    ax.set_title("[%s]在广金的借书情况"%findName(finder, userId))
+    # ax.set_title("[%s]在广金的借书情况"%findName(finder, userId))
+    ax.set_title(str(userId) + "在广金的借书情况")
 
     plt.xticks(np.arange(0, len(x), monthStep))
     plt.yticks(np.arange(0, yHeight, 5))
