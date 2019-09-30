@@ -18,9 +18,10 @@ class MyFormatter(Formatter):
         return self.dates[idx]
 
 def showIndexByMA250Graph(indexName='上证指数',indexCode='000001'):
-    df = tushare.pro_bar(ts_code=indexCode, asset='I',start_date='20100101', end_date='20190101', ma=[50,250])
-    print(df.axes,df.columns,df.index,df.shape,df.size,
-        sep='\n>>>----------<<<\n')
+    df = tushare.pro_bar(ts_code='000300.SH', asset='I',start_date='20100101', end_date='20190929', ma=[50,250])
+    print(df)
+    # print(df.axes,df.columns,df.index,df.shape,df.size,
+    #     sep='\n>>>----------<<<\n')
     #print(df.loc[:,['trade_date','ma50','ma250']])
     availableDf = df[0:(len(df)-250)]
     # print(availableDf)
@@ -52,6 +53,6 @@ def showIndexByMA250Graph(indexName='上证指数',indexCode='000001'):
 
 if __name__ == "__main__":
     indexs = {'300价值':'000919.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
-    showIndexByMA250Graph('中证500',indexs['中证500'])
+    showIndexByMA250Graph('300价值',indexs['300价值'])
     # for k,v in indexs.items():
     #     showIndexByMA250Graph(k,v)

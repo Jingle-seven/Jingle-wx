@@ -6,6 +6,8 @@
 # import xlrd,xlwt
 import time,openpyxl,tushare
 tushare.set_token('cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
+rawMoney = 1000 #基准总定投金额
+
 
 # 指数类，包含指数当前点数和最终投资金额等信息
 class IndexToMa250:
@@ -13,11 +15,15 @@ class IndexToMa250:
         self.name = name #指数名
         self.index = index #指数点数
         self.MA250 = MA250 #指数年线
-        self.investmentFactor = self.MA250*100/self.index - 100 #指数与年线的差
+        self.investmentFactor = self.index*100/self.MA250 - 100 #指数与年线的差
         self.advanceFactor = 0 #（此指数与年线偏离程度）减去（最low的指数与年线偏离程度），作为投资金额中占比因子
         self.advancePercentage = 0 #在投资金额中的占比
         self.finalMoney = 0 #最终投资金额
         self.code = code #投资的基金代码
+
+    def __str__(self):
+        return '%s点数%.0f,年线%.0f'%(self.name,self.index,self.MA250)
+
 
 # 计算最终投资金额
 def calculateFinalMoney(someIndexes):
@@ -47,6 +53,26 @@ def calculateFinalMoney(someIndexes):
     for i in someIndexes:
         i.finalMoney = i.advancePercentage * planMoney
         print("%s:\t %.2f"% (i.name,i.finalMoney))
+
+# 计算最终投资金额直接版,直接分别计算各指数投入金额
+def calculateFinalMoneyV2(someIndexes):
+    eachMoney = rawMoney / len(someIndexes)
+    for i in someIndexes:
+        i.advanceFactor = (i.index / i.MA250)
+        if i.advanceFactor < 1:
+            fac = 1 - i.advanceFactor
+            i.finalMoney = eachMoney * (1 + fac*5) #差距放大5倍,0.8时金额翻一倍
+        elif 1 <= i.advanceFactor <1.1:
+            fac = 1.1-i.advanceFactor
+            i.finalMoney = eachMoney * fac * 10 #1时正常,金额随系数增长而递减,到1.1时递减为0
+        else:
+            fac = i.advanceFactor - 1
+            i.finalMoney = -(eachMoney * fac * 10) #大于1.1开始卖出,1.1一倍,1.2两倍.
+            # 实际操作时是卖出已投入金额的10%,20%,以此类推
+        print('%s  %.3f  %.0f'%(i.name,i.advanceFactor,i.finalMoney))
+
+
+
 
 def writeExcel(sIdxes):
     excelPath = '../resource/定投记录.xlsx'
@@ -79,28 +105,28 @@ def writeExcel(sIdxes):
     for idx in sIdxes:
         rowNum = sIdxes.index(idx)+2
         dSheet.cell(rowNum,1).value = idx.name
-        dSheet.cell(rowNum,2).value = idx.index
-        dSheet.cell(rowNum,3).value = idx.MA250
-        dSheet.cell(rowNum,4).value = idx.investmentFactor
-        dSheet.cell(rowNum,5).value = idx.advanceFactor
-        dSheet.cell(rowNum,6).value = idx.finalMoney
+        dSheet.cell(rowNum,2).value = round(idx.index)
+        dSheet.cell(rowNum,3).value = round(idx.MA250)
+        dSheet.cell(rowNum,4).value = round(idx.investmentFactor,2)
+        dSheet.cell(rowNum,5).value = round(idx.advanceFactor,3)
+        dSheet.cell(rowNum,6).value = round(idx.finalMoney,0)
         sSheet.cell(nowSSheetRow,summarySheetRowNames.index(idx.name) + 1).value = round(idx.finalMoney,1)
     wbook.save(excelPath)
     print("ok")
-def getShareData():
+def getShareData(indexToCode):
     # print('tushare token:','cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
-    data = tushare.get_hist_data('600104')
-    df = tushare.pro_bar(ts_code='000001.SZ', start_date='20180101', end_date='20181011', ma=[5, 20, 50])
-    print(data)
-    print(df)
+    idxs = []
+    nowDateStr = time.strftime("%Y%m%d", time.localtime())
+    for indexName,indexCode in indexToCode.items():
+        df = tushare.pro_bar(ts_code=indexCode, asset='I',start_date='20150101', end_date=nowDateStr, ma=[250])
+        # print(df.iloc[[0]])
+        idxs.append(IndexToMa250(indexName,df.loc[0,'close'],df.loc[0,'ma250'],indexCode))
+    return idxs
 if __name__ == "__main__":
-    rawMoney = 1000 #基准定投金额
-    indexes = [
-        IndexToMa250("中证500",4600,4804),
-        IndexToMa250("沪深300",3633,3486),
-        IndexToMa250("红利机会",7453,8142),
-        IndexToMa250("深证F60",7198,6642),]
-    getShareData()
-    # calculateFinalMoney(indexes)
-    # writeExcel(indexes)
+    indexToCode = {'沪深300':'000300.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
+    indexes = getShareData(indexToCode)
+    calculateFinalMoneyV2(indexes)
+    for i in indexes:
+        if i.finalMoney < 0: i.finalMoney = 0 # 计算的卖出金额和实际卖出金额不同,所以置0
+    writeExcel(indexes)
 
