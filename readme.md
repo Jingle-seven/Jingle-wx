@@ -6,11 +6,11 @@ cd . / and run commands to init database and  start application
 - python3 manage.py migrate
 - python3 manage.py runserver 0.0.0.0:8000  
 
-# note  
+# Note  
 It is better run in pycharm, and make ./jingle as source root  
 and then run small py files
 
-# some script
+# Some script
 #### what whl file the pip support 
 import pip  
 print(pip.pep425tags.get_supported())  
