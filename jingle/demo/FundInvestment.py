@@ -99,7 +99,7 @@ def writeExcel(sIdxes):
     nowDateStr = time.strftime("%Y-%m-%d", time.localtime())
     nowYearStr = time.strftime("%Y", time.localtime())
     totalMoney = 0
-    detailSheetRowNames = ["指数名","指数值","年线","偏离程度","投资因子","投资金额"]
+    detailSheetRowNames = ["指数名","指数值","年线","偏离程度","投资因子","估值状态","投资金额"]
     summarySheetRowNames = ["日期","总金额"]#汇总表的各列名
     for i in sIdxes:
         summarySheetRowNames.append(i.name)
@@ -129,7 +129,8 @@ def writeExcel(sIdxes):
         dSheet.cell(rowNum,3).value = round(idx.MA250)
         dSheet.cell(rowNum,4).value = round(idx.investmentFactor,2)
         dSheet.cell(rowNum,5).value = round(idx.advanceFactor,3)
-        dSheet.cell(rowNum,6).value = round(idx.finalMoney,0)
+        dSheet.cell(rowNum, 6).value = idx.status
+        dSheet.cell(rowNum,7).value = round(idx.finalMoney,0)
         sSheet.cell(nowSSheetRow,summarySheetRowNames.index(idx.name) + 1).value = round(idx.finalMoney,1)
     wbook.save(excelPath)
     print("ok")
