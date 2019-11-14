@@ -146,7 +146,7 @@ if __name__ == "__main__":
     indexToCode = {'沪深300':'000300.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
     indexes = [
         IndexToMa250('沪深300',code='000300.SH',status='低估'),# 状态用300价值的状态
-        IndexToMa250('中证500',code='000905.SH',status='低估'),
+        IndexToMa250('中证500',code='000905.SH',status='正常'),
         IndexToMa250('基本面60',code='399701.SZ',status='低估'),
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
