@@ -89,7 +89,7 @@ def calculateFinalMoneyV2(someIndexes):
         if i.finalMoney < 0: i.finalMoney = 0
         pureFMoney = pureFMoney if pureFMoney>=0 else 0
 
-        print('%s  %.3f  %.0f  %.0f'%(i.name,i.advanceFactor,pureFMoney,i.finalMoney))
+        print('{:<4}\t  {:.3f}\t  {:>3.0f}\t  {:>3.0f}'.format(i.name,i.advanceFactor,pureFMoney,i.finalMoney))
 
 
 
@@ -151,5 +151,8 @@ if __name__ == "__main__":
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
     getShareData(indexes)
+    print('指数\t','当前/年线','初步金额','考虑估值时金额')
     calculateFinalMoneyV2(indexes)
     #writeExcel(indexes)
+    # print('{:^6.0f} {:^2.5f}'.format(12345,1.1234))
+    # print('{:^6.0f} {:^2.5f}'.format(1, 1.1234))
