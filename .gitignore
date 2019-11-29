@@ -17,3 +17,4 @@ jingle/demo/__pycache__/
 **/build/
 jingle/test/__pycache__/
 sever/migrations/__pycache__/
+jingle/resource/water_mouth/
