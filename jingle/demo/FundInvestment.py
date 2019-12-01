@@ -78,6 +78,7 @@ def calculateFinalMoneyV2(someIndexes):
             fac = i.advanceFactor - 1
             i.finalMoney = -(eachMoney * fac * 10) #大于1.1开始卖出,1.1一倍,1.2两倍.
             # 实际操作时是卖出已投入金额的10%,20%,以此类推
+        pureFMoney = i.finalMoney
         # 判断估值状态
         if i.status == '低估':# 低估加50%金额,高估减50%金额
             if i.finalMoney < 0: i.finalMoney = 0
@@ -86,10 +87,9 @@ def calculateFinalMoneyV2(someIndexes):
             i.finalMoney = i.finalMoney - halfEachMoney
         # 卖出操作置零,因为和实际操作不同.实际是卖出已投入金额的10%,20%等等
         if i.finalMoney < 0: i.finalMoney = 0
-
-        pureFMoney = i.finalMoney-halfEachMoney
         pureFMoney = pureFMoney if pureFMoney>=0 else 0
-        print('%s  %.3f  %.0f  %.0f'%(i.name,i.advanceFactor,pureFMoney,i.finalMoney))
+
+        print('{:<4}\t  {:.3f}\t  {:>3.0f}\t  {:>3.0f}'.format(i.name,i.advanceFactor,pureFMoney,i.finalMoney))
 
 
 
@@ -151,5 +151,8 @@ if __name__ == "__main__":
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
     getShareData(indexes)
+    print('指数\t','当前/年线','初步金额','考虑估值时金额')
     calculateFinalMoneyV2(indexes)
-    writeExcel(indexes)
+    #writeExcel(indexes)
+    # print('{:^6.0f} {:^2.5f}'.format(12345,1.1234))
+    # print('{:^6.0f} {:^2.5f}'.format(1, 1.1234))
