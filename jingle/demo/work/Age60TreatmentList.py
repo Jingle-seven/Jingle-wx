@@ -47,4 +47,5 @@ for line in txtFile:
         notPaidCount = notPaidCount + 1
         notPaidS.append(row)
     rowNum  = rowNum + 1
+
 wbook.save(dir + xlsName + '.xlsx')
