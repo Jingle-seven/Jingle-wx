@@ -1,5 +1,5 @@
 # coding: utf-8
-#
+# 需要补缴农保的名单，他们60岁时未交够15年
 
 import time,openpyxl
 fileName = 'C:/Users/Administrator/Desktop/74年及之前出生未补缴农保名单_20191202.xlsx'
