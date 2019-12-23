@@ -1,13 +1,14 @@
 # coding: utf-8
 # 每月已交农保计数统计
 
-import openpyxl
+import openpyxl,os
 
 class village:
     def __init__(self, id,name,count = 0):
         self.id = id
         self.name = name
-        self.count = count
+        self.thisYearCount = count
+        self.passYearPayCount = 0
 villages = [
     village('4402820401','赤岭村',0),
     village('4402820402','弱过村',0),
@@ -29,25 +30,41 @@ for v in villages:
     idToVillage[v.id] = v
 
 
-xlsName = '12月已缴农保_20191220'
-dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
+xlsName = '12月已缴农保_20191223'
+dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/已缴农保/'
 statisticsFileName = 'C:/Users/Administrator/Desktop/杨欢欢/新农保年已交费人员/已缴人员汇总统计表2019（全）.xlsx'
 txtPath = dir + xlsName + '.txt'
-txtFile = open(txtPath,'rb') #因为有乱码，用正常文本解析会报错，只能用二进制解析
-
-
 xsl = openpyxl.load_workbook(statisticsFileName)
-for line in txtFile:
-    if '#' in str(line[:10], encoding="gbk"): continue
-    # print(str(line[:10], encoding="gbk"))
-    recordArr = line.split(b'\t')
-    theId = str(recordArr[1], encoding="gbk")
-    theVillage = idToVillage[theId]
-    theVillage.count = theVillage.count +1
-for k,v in idToVillage.items():
-    print(v.name,v.count)
-sheet = xsl.worksheets[0]
-for rowNum in range(4,17):
-    print(rowNum,sheet.cell(rowNum,13).value)
-    sheet.cell(rowNum, 15).value = villages[rowNum-4].count
+
+# 文件路径，写入的列
+def analyseOneFile(txtPath,colNum = 15):
+    txtFile = open(txtPath,'rb') #因为有乱码，用正常文本解析会报错，只能用二进制解析
+    for line in txtFile:
+        # print(line)
+        if '#' in str(line[:10], encoding="gbk"): continue
+        recordArr = line.split(b'|')
+        # print(str(recordArr[12], encoding="gbk"))
+        theId = str(recordArr[1], encoding="gbk")
+        theVillage = idToVillage[theId]
+        if '期缴' == str(recordArr[12], encoding="gbk"):
+            theVillage.thisYearCount = theVillage.thisYearCount + 1
+        else:
+            theVillage.passYearPayCount = theVillage.passYearPayCount + 1
+
+    for k,v in idToVillage.items():
+        print(v.name, v.thisYearCount)
+
+    # 写入数据
+    sheet = xsl.worksheets[0]
+    for rowNum in range(4,17):
+        sheet.cell(rowNum, colNum+1).value = villages[rowNum-4].thisYearCount
+    # 重置计数器
+    for v in villages:
+        v.passYearPayCount = 0
+        v.thisYearCount = 0
+
+for oneTxtFile in os.listdir(dir):# 每月一个文件
+    print(oneTxtFile)
+    analyseOneFile(dir + '/' + oneTxtFile,int(oneTxtFile[:2]))
+
 xsl.save(statisticsFileName)
