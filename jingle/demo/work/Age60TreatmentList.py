@@ -5,7 +5,7 @@ import openpyxl
 
 tableHead = ['序号','村（社区）名称','姓名','公民身份号码','性别','已缴费月数','当前缴费档次']
 escapeNames = ['戴金兰','谭大妹','钟达海','陈如章','刘荣','李英山','戴东北','蓝善付']
-xlsName = '农保待遇核定_20191129'
+xlsName = '农保待遇核定_20200105'
 dir = 'C:/Users/Administrator/Desktop/农保每月待遇核定/'
 txtPath = dir + xlsName + '.txt'
 txtFile = open(txtPath,encoding='gbk')
@@ -30,15 +30,20 @@ for line in txtFile:
     if line.startswith('#'): #第一行不解析
         continue
     if x[15] == '0':#删掉已交0期的数据
+        print(x[5] + ' 去除，已交0期')
         continue
     if  x[5] in escapeNames :#删掉无效人名数据
+        print(x[5] + ' 去除，无效人名')
         continue
     if rowNum == 2:#表头行不解析
         rowNum  = rowNum + 1
         continue
     row = [rowNum-2,x[4],x[5],x[6],x[7],x[15],x[17],]
     print(row)
-    if row[5] == '108':
+    birthYear = int(row[3][6:10])
+    monthToBePaid = (birthYear - 1950) * 12
+    # print(row[3][6:10],monthToBePaid,row[5] == str(monthToBePaid))
+    if row[5] == str(monthToBePaid):
         row[0] = paidCount
         paidCount = paidCount +1
         paidS.append(row)
@@ -48,4 +53,4 @@ for line in txtFile:
         notPaidS.append(row)
     rowNum  = rowNum + 1
 
-wbook.save(dir + xlsName + '.xlsx')
+# wbook.save(dir + xlsName + '.xlsx')

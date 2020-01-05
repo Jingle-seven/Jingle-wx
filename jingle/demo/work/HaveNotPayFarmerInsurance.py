@@ -14,7 +14,7 @@ def convertOneVillage(txtFullPath,destFileName=None):
     filePath, txtName = os.path.split(txtFullPath) # 分离路径和文件名
     countryName = str(txtName.split('.')[0]) # 分离村名
     sheet = wbook.create_sheet(countryName[:2],0)
-    tableHead = ['序号', '姓名', '身份证', '档次', '账号', '已交月份']
+    tableHead = ['序号', '姓名', '身份证('+countryName[:2]+')', '档次', '账号', '已交月份']
     sheet.append(tableHead)
     # 数据
     rowNum = 2
@@ -52,8 +52,8 @@ def convertOneVillage(txtFullPath,destFileName=None):
     print(destFullFilePath)
 
 if __name__ == '__main__':
-    fileName = '云西未缴农保_20191220.txt'
-    # fileName = '水口镇未续缴农保_20191221'
+    # fileName = '赤岭未缴农保_20191226.txt'
+    fileName = '水口镇未续缴农保_20191227'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
         for oneTxtFile in os.listdir(fullFilePath):

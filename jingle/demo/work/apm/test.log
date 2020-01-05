@@ -2,11 +2,32 @@
 [{"traceId":"1","name":"get-traces","id":"ebf33e1a81dc6f","parentId":"bd7a977555f6b9","timestamp":1458702548478000,"duration":354374,"annotations":[],"binaryAnnotations":[{"key":"lc","value":"JDBCSpanStore","endpoint":{"serviceName":"zipkin-query","ipv4":"192.168.1.2","port":9411}},{"key":"request","value":"QueryRequest{serviceName=zipkin-query,spanName=null,annotations=[],binaryAnnotations={},minDuration=null,maxDuration=null,endTs=1458702548478,lookback=86400000,limit=1}","endpoint":{"serviceName":"zipkin-query","ipv4":"192.168.1.2","port":9411}}]}]
 [{"traceId":"1","name":"query","id":"be2d01e33cc78d","parentId":"ebf33e1a81dc6f","timestamp":1458702548786000,"duration":13000,"annotations":[{"endpoint":{"serviceName":"zipkin-query","ipv4":"192.168.1.2","port":9411},"timestamp":1458702548786000,"value":"cs"},{"endpoint":{"serviceName":"zipkin-query","ipv4":"192.168.1.2","port":9411},"timestamp":1458702548799000,"value":"cr"}],"binaryAnnotations":[{"key":"jdbc.query","value":"selectdistinct`zipkin_spans`.`trace_id`from`zipkin_spans`join`zipkin_annotations`on(`zipkin_spans`.`trace_id`=`zipkin_annotations`.`trace_id`and`zipkin_spans`.`id`=`zipkin_annotations`.`span_id`)where(`zipkin_annotations`.`endpoint_service_name`=?and`zipkin_spans`.`start_ts`between?and?)orderby`zipkin_spans`.`start_ts`desclimit?","endpoint":{"serviceName":"zipkin-query","ipv4":"192.168.1.2","port":9411}},{"key":"sa","value":true,"endpoint":{"serviceName":"spanstore-jdbc","ipv4":"127.0.0.1","port":3306}}]}]
 
+下楼未缴农保_20191221 54 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+下湖未缴农保_20191221 55 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+云西未缴农保_20191221 57 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+大坪未缴农保_20191221 28 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+大部未缴农保_20191221 60 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+弱过未缴农保_20191221 81 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+水口未缴农保_20191226 96 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+沙头未缴农保_20191221 88 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+河村未缴农保_20191221 86 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+泷头未缴农保_20191221 42 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+石庄未缴农保_20191226 66 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+群星未缴农保_20191221 34 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+赤岭未缴农保_20191221 41 end
+C:/Users/Administrator/Desktop/农保未续缴明细/水口镇未续缴农保_20191227.xlsx
+ok
+1227
 
-
-# 余额不足
-440223196208163082 何奀婆
-440223196308133075 何腾林
-440223196510190540 朱祖兰
-440223196701145224 邓水凤
-440223197211031122 林红英

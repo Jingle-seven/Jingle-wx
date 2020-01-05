@@ -56,8 +56,9 @@ def analyseOneFile(txtPath,colNum = 15):
 
     # 写入数据
     sheet = xsl.worksheets[0]
-    for rowNum in range(4,17):
+    for rowNum in range(4,18):
         sheet.cell(rowNum, colNum+1).value = villages[rowNum-4].thisYearCount
+        sheet.cell(rowNum+16, colNum + 1).value = villages[rowNum - 4].passYearPayCount
     # 重置计数器
     for v in villages:
         v.passYearPayCount = 0
