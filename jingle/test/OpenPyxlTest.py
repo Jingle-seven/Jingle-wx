@@ -10,6 +10,7 @@ print(wbook.sheetnames) #工作表名
 sheet = wbook['Sheet'] # 按名字获取工作表
 sheet2 = wbook.worksheets[0] # 按顺序获取工作表
 sheet.title = 'new_sheet' # 更改表名
+wbook.remove(wbook.worksheets[0]) #删除工作表
 
 print(sheet.max_row,sheet.max_column) # 工作表最大行列
 tableHead = ['序号', '姓名', '身份证', '档次', '账号', '已交月份']

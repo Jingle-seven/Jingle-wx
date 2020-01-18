@@ -52,8 +52,8 @@ def convertOneVillage(txtFullPath,destFileName=None):
     print(destFullFilePath)
 
 if __name__ == '__main__':
-    # fileName = '赤岭未缴农保_20191226.txt'
-    fileName = '水口镇未续缴农保_20191227'
+    fileName = '水口未缴农保_201912月有吴才能.txt'
+    # fileName = '水口镇未续缴农保_20191227'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
         for oneTxtFile in os.listdir(fullFilePath):
