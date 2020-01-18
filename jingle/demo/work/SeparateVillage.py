@@ -1,6 +1,6 @@
 # coding: utf-8
 # 把各种excel分村委，按村委分成多个sheet
-# TODO 未完成
+# TODO 未完成,要设定样式
 
 import openpyxl,time
 import jingle.demo.work.Data as Data
