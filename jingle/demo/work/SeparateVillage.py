@@ -8,24 +8,23 @@ from openpyxl.styles import Border, Side
 
 
 startTs = time.time()
-xlsName = '第四六八档'
 dir = 'C:/Users/Administrator/Desktop/'
-
+xlsName = '第四六八档'
+skColHead = ''
+skColValue = '水口镇'
+separateColHead = '村委'
+skColHeadIdx = 0
+separateColHeadIdx = 0
 # colHeadToWidth = {'序号':4, '公安户籍编号':10, '姓名':8, '公民身份号码':20, '户籍地址':40, '未参保原因':10}
-colHeadToWidth = {'序号':4,'村（社区）名称':20,'姓名':8,'身份证号':20,'人群类型':10,
-                 '个人缴费金额':8,'累计已缴费月数':4,'当前缴费档次':20,'实际每年缴费':10}
+colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'人群类型':10,
+                 '个人缴费金额':8,'累计已缴费月数':4,'当前缴费档次':24,'实际年均缴费':10}
 nameToColProp = {}
 for k,v in colHeadToWidth.items():
     nameToColProp[k] = Data.ColProp(k,v,remark=-1)
+
 rawBook = openpyxl.load_workbook(dir + xlsName + '.xlsx')
 resBook = openpyxl.Workbook()
 resBook.remove(resBook.worksheets[0])
-skColHead = ''
-skColValue = '水口镇'
-separateColHead = '村（社区）名称'
-skColHeadIdx = 0
-separateColHeadIdx = 0
-
 nameToVillage = {}
 for v in Data.villages: #创建工作表，并保存工作表的引用。写备注,创字典，便于后面匹配
     v.obj = resBook.create_sheet(v.name)
@@ -34,6 +33,7 @@ for v in Data.villages: #创建工作表，并保存工作表的引用。写备�
         v.remark = '南雄市水口镇水口居委会'
     else:
         v.remark = '南雄市水口镇'+ v.name +'村委会'
+        # v.remark = v.name +'村委会'
     nameToVillage[v.remark] = v
 print(rawBook.sheetnames)
 nowSheet = rawBook.worksheets[1]
@@ -53,7 +53,7 @@ for row in nowSheet.values:
             try:
                 v.remark = row.index(k)
             except Exception as e:
-                print(k,e)
+                print('表头没有 {} 列'.format(k),e)
                 pass
     # print(row[skColHeadIdx],row[skColHeadIdx].find(skColValue))
     # 如果没有设置水口镇过滤器
@@ -65,12 +65,13 @@ for row in nowSheet.values:
             continue
         village.count +=1
         resRow = [village.count]
+        # print(village,village.count)
         for k,v in nameToColProp.items():
             if v.remark==-1: # 如果是原表格中没有的列
-                if len(resRow)>1: # 而且不是第一列序号列，那么填空白
-                    resRow.append('')
-                else:# 如果是原表格中没有的列,而且是序号列，跳过
+                if k=='序号': # 而且不是第一列序号列，那么填空白
                     pass
+                else:# 如果是原表格中没有的列,而且是序号列，跳过
+                    resRow.append('')
             else:
                 resRow.append(row[v.remark])
         village.obj.append(resRow)
