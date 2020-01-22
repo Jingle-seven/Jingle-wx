@@ -28,8 +28,10 @@ for v in villages:
     nameToVillage[v.name] = v
 
 class ColProp:
-    def __init__(self, head,len = 5,obj = None,remark=''):
+    def __init__(self, head,len = 5,obj = None,remark='',**argDict):
         self.head = head
         self.len = len
         self.obj = obj
         self.remark = remark
+        for k,v in argDict.items():
+            setattr(self,k,v)
