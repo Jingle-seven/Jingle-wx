@@ -7,5 +7,5 @@
 # print(len(hex(1 << 128)))
 str = '123456789'
 print(str[:3])
-map = {2:4}
-print(len(map))
+s = input("请输入代码： ")
+eval('print('+ s +')')

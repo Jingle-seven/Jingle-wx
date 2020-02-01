@@ -20,8 +20,8 @@ print("format {0[maggie]} and {0[nancy]}".format(dic))
 print("format {maggie} and {maggie}".format(**dic))
 print("format {start} and {end}".format(**locals()))# 甚至可以用locals将局部变量传入
 print("abc".find("x"))
-print("abcabc".replace("c","d",1))
-print("a b c".split(" ",1))
+print("abcabc".replace("c","d",1)) # 只替换第一个C
+print("a b c".split(" ",1)) # 只分割第一个
 
 # 条件
 print("CONDITION ----------------------> ")
@@ -39,9 +39,9 @@ if condition:
     print("true")
 else:
     print("false")
-# 返回操作数而非布尔值
-print(2 and 5)
-print(2 and 0)
+# and返回最后一个操作数而非布尔值
+print(2 and 5) #返回5，真
+print(2 and 0) #返回0，假
 
 # 循环
 print("LOOP ----------------------> ")
@@ -68,7 +68,7 @@ tp = tuple(list1[:2])
 a, b = xz_add(*tp)
 print(b, a)
 
-# 乘方递归实现,默认次数参数为2
+# 默认参数为2,乘方递归实现
 def xz_pow(x, n=2):
     if n > 1:
         return xz_pow(x, n - 1) * x
@@ -107,6 +107,8 @@ for n in g:
 # join,split逆操作
 names = ["tom","nancy","tony"]
 print(" = ".join(names))
+
+# 异常
 try:
     1 / 0
 except ZeroDivisionError as e:
