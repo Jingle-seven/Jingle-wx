@@ -7,5 +7,6 @@
 # print(len(hex(1 << 128)))
 str = '123456789'
 print(str[:3])
-s = input("请输入代码： ")
-eval('print('+ s +')')
+#s = input("请输入代码： ")
+print('10' in str)
+

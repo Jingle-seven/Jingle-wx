@@ -1,3 +1,6 @@
+from openpyxl.styles import Border, Side
+import openpyxl
+
 class village:
     def __init__(self, id,name,count = 0,obj = None,remark=''):
         self.id = id
@@ -28,10 +31,36 @@ for v in villages:
     nameToVillage[v.name] = v
 
 class ColProp:
-    def __init__(self, head,len = 5,obj = None,remark='',**argDict):
+    def __init__(self, head,len = 8,obj = None,remark='',**argDict):
         self.head = head
         self.len = len
         self.obj = obj
         self.remark = remark
         for k,v in argDict.items():
             setattr(self,k,v)
+
+# 设置边框和列宽
+thin = Side(border_style="thin", color="000000")
+border = Border(left=thin, right=thin, top=thin, bottom=thin)
+# 如果含有以下关键词，就设置对应列宽
+colHeadToWidth = {'序号':4,'村':20,'姓名':8,'性别':4,'身份':20,'月数':8,'档次':24,'银行':20}
+def setBorderWidth(sheet,maxBorderRowNum=None):
+    for rowI,row in enumerate(sheet):
+        for cellIdx,cell in enumerate(row):
+            cell.border = border
+            if rowI == 0:# 获取列头，判断该使用什么列宽
+                cp = ColProp(cell.value)
+                for k,v in colHeadToWidth.items():
+                    if k in cp.head:
+                        cp.len = v
+                        cp.remark = openpyxl.utils.get_column_letter(cellIdx+1)
+                        sheet.column_dimensions[cp.remark].width = cp.len
+                        # print(cp.head,cp.len)
+
+
+    if maxBorderRowNum == None or sheet.max_column > maxBorderRowNum:
+        return
+    # 如果设置了要画边框的最大行，而且数据行数小于设置的行数，那么继续画边框
+    for ri in range(1,maxBorderRowNum + 1):
+        for ci in range(1,sheet.max_column + 1):
+            sheet.cell(ri,ci).border = border
