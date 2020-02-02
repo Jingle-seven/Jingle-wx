@@ -2,7 +2,7 @@
 # 每月农保待遇核定名单，用来通知到龄人员来开始领取待遇，txt转excel，删掉无效人名
 
 import openpyxl
-import jingle.demo.work.Data as Data
+import jingle.demo.work.SkData as SkData
 
 tableHead = ['序号','村（社区）名称','姓名','公民身份号码','性别','已缴费月数','当前缴费档次']
 escapeNames = ['戴金兰','谭大妹','钟达海','陈如章','刘荣','李英山','戴东北','蓝善付']
@@ -54,6 +54,6 @@ for line in txtFile:
         notPaidS.append(row)
     rowNum  = rowNum + 1
 
-Data.setBorderWidth(paidS,25) # 设置边框直到25行
-Data.setBorderWidth(notPaidS,25)
+SkData.setBorderWidth(paidS, 25) # 设置边框直到25行
+SkData.setBorderWidth(notPaidS, 25)
 wbook.save(dir + xlsName + '.xlsx')

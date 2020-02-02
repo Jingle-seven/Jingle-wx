@@ -2,7 +2,7 @@
 # 把各种excel分村委，按村委分成多个sheet
 
 import openpyxl,time
-import jingle.demo.work.Data as Data
+import jingle.demo.work.SkData as Data
 from openpyxl.styles import Border, Side
 # from openpyxl.utils import get_column_letter
 

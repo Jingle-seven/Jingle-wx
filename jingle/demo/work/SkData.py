@@ -47,7 +47,7 @@ colHeadToWidth = {'序号':4,'村':20,'姓名':8,'性别':4,'身份':20,'月数'
 def setBorderWidth(sheet,maxBorderRowNum=None):
     for rowI,row in enumerate(sheet):
         for cellIdx,cell in enumerate(row):
-            cell.border = border
+            cell.border = border # 画边框
             if rowI == 0:# 获取列头，判断该使用什么列宽
                 cp = ColProp(cell.value)
                 for k,v in colHeadToWidth.items():
