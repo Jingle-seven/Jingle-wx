@@ -4,7 +4,7 @@
 # 以最低的差距作为0, 其他差距减去最低差距作为权重, 算出所有指数占总投资金额的百分比
 # 将百分比乘以计划投资金额, 得出各指数投入金额
 # import xlrd,xlwt
-import time,openpyxl,tushare
+import functools,datetime,openpyxl,tushare
 tushare.set_token('cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
 rawMoney = 1000 #基准总定投金额
 
@@ -80,11 +80,14 @@ def calculateFinalMoneyV2(someIndexes):
             # 实际操作时是卖出已投入金额的10%,20%,以此类推
         pureFMoney = i.finalMoney
         # 判断估值状态
-        if i.status == '低估':# 低估加50%金额,高估减50%金额
+        if i.status == '低估':# 低估加50%X金额,正常减50%X金额,高估减80%X金额，X是计划每个指数要投入的金额
             if i.finalMoney < 0: i.finalMoney = 0
-            i.finalMoney = i.finalMoney + halfEachMoney
+            i.finalMoney = i.finalMoney + eachMoney*0.5
+        elif i.status == '正常':
+            if i.finalMoney < 0: i.finalMoney = 0
+            i.finalMoney = i.finalMoney - eachMoney * 0.5
         elif i.status == '高估':
-            i.finalMoney = i.finalMoney - halfEachMoney
+            i.finalMoney = i.finalMoney - eachMoney*0.8
         # 卖出操作置零,因为和实际操作不同.实际是卖出已投入金额的10%,20%等等
         if i.finalMoney < 0: i.finalMoney = 0
         pureFMoney = pureFMoney if pureFMoney>=0 else 0
@@ -96,8 +99,11 @@ def calculateFinalMoneyV2(someIndexes):
 
 def writeExcel(sIdxes):
     excelPath = '../resource/定投记录.xlsx'
-    nowDateStr = time.strftime("%Y-%m-%d", time.localtime())
-    nowYearStr = time.strftime("%Y", time.localtime())
+    nowDateTime = datetime.datetime.now()
+    if nowDateTime.hour >=15:# 过了下午3点，算是下一个交易日
+        nowDateTime = nowDateTime + datetime.timedelta(days=1)
+    nowDateStr = nowDateTime.strftime("%Y-%m-%d")
+    nowYearStr = nowDateTime.strftime("%Y")
     totalMoney = 0
     detailSheetRowNames = ["指数名","指数值","年线","偏离程度","投资因子","估值状态","投资金额"]
     summarySheetRowNames = ["日期","总金额"]#汇总表的各列名
@@ -136,7 +142,7 @@ def writeExcel(sIdxes):
     print("ok")
 def getShareData(idxToMA250):
     # print('tushare token:','cb8ad270dcbe3411cbf4d33d2e4dd5cd026c0d015a9cd786fe218322')
-    nowDateStr = time.strftime("%Y%m%d", time.localtime())
+    nowDateStr = datetime.datetime.now().strftime("%Y%m%d")
     for idx in idxToMA250:
         df = tushare.pro_bar(ts_code=idx.code, asset='I',start_date='20150101', end_date=nowDateStr, ma=[250])
         # print(df.iloc[[0]])
@@ -146,13 +152,15 @@ if __name__ == "__main__":
     indexToCode = {'沪深300':'000300.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
     indexes = [
         IndexToMa250('沪深300',code='000300.SH',status='低估'),# 状态用300价值的状态
-        IndexToMa250('中证500',code='000905.SH',status='正常'),
+        IndexToMa250('中证500',code='000905.SH',status='低估'),
         IndexToMa250('基本面60',code='399701.SZ',status='低估'),
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
     getShareData(indexes)
     print('指数\t','当前/年线','初步金额','考虑估值时金额')
     calculateFinalMoneyV2(indexes)
-    #writeExcel(indexes)
+    totalFinalMoney = functools.reduce(lambda x,y: x + y.finalMoney, indexes,0)
+    print('总投入：{:^.0f} '.format(totalFinalMoney))
+    writeExcel(indexes)
     # print('{:^6.0f} {:^2.5f}'.format(12345,1.1234))
     # print('{:^6.0f} {:^2.5f}'.format(1, 1.1234))

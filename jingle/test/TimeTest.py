@@ -1,4 +1,5 @@
 import time
+import datetime # datetime提供了基于time的更多方法
 import calendar
 
 # 时间戳
@@ -8,6 +9,12 @@ print(timeStamp)
 # 标准时间元组
 localTime = time.localtime()
 print(localTime)
+
+# 日期时间加减
+dt = datetime.datetime.now()
+print(dt,dt.day)
+dt = dt + datetime.timedelta(days=1)
+print(dt,dt.strftime("%Y-%m-%d"))
 
 # 简单的可视时间
 ascTime = time.asctime()
@@ -25,12 +32,6 @@ print(timestamp)
 # 输出一个月的日历
 cal = calendar.month(2016, 10)
 print(cal)
-
-# 第一次调用返回时间戳,第二次返回与第一次的间隔
-sTime = time.clock()
-time.sleep(2)
-eTime = time.clock()
-print(eTime-sTime)
 
 
 
