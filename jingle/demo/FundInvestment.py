@@ -79,6 +79,7 @@ def calculateFinalMoneyV2(someIndexes):
             i.finalMoney = -(eachMoney * fac * 10) #大于1.1开始卖出,1.1一倍,1.2两倍.
             # 实际操作时是卖出已投入金额的10%,20%,以此类推
         pureFMoney = i.finalMoney
+        i.advanceFactor = i.finalMoney / eachMoney # 替换投资因子为放大后的数据
         # 判断估值状态
         if i.status == '低估':# 低估加50%X金额,正常减50%X金额,高估减80%X金额，X是计划每个指数要投入的金额
             if i.finalMoney < 0: i.finalMoney = 0
@@ -133,7 +134,7 @@ def writeExcel(sIdxes):
         dSheet.cell(rowNum,1).value = idx.name
         dSheet.cell(rowNum,2).value = round(idx.index)
         dSheet.cell(rowNum,3).value = round(idx.MA250)
-        dSheet.cell(rowNum,4).value = round(idx.investmentFactor,2)
+        dSheet.cell(rowNum,4).value = str(round(idx.investmentFactor + 100,2)) + '%'
         dSheet.cell(rowNum,5).value = round(idx.advanceFactor,3)
         dSheet.cell(rowNum, 6).value = idx.status
         dSheet.cell(rowNum,7).value = round(idx.finalMoney,0)
