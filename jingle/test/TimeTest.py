@@ -16,7 +16,11 @@ print(dt,dt.day)
 dt = dt + datetime.timedelta(days=1)
 print(dt,dt.strftime("%Y-%m-%d"))
 
-# 简单的可视时间
+# 字符串转datetime
+dt2 = datetime.datetime.strptime('20200129','%Y%m%d')
+print(dt2)
+
+# 简单的可视时间 Thu Feb  6 10:09:08 2020
 ascTime = time.asctime()
 print(ascTime)
 
