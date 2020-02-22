@@ -146,8 +146,8 @@ def getShareData(idxToMA250):
     nowDateStr = datetime.datetime.now().strftime("%Y%m%d")
     for idx in idxToMA250:
         df = tushare.pro_bar(ts_code=idx.code, asset='I',start_date='20150101', end_date=nowDateStr, ma=[250])
-        # print(df.iloc[[0]])
-        print(df.loc[0,'trade_date'])
+        print(df.iloc[0])
+        # print(df.loc[0,'trade_date'])
         idx.setPoint(df.loc[0,'close'],df.loc[0,'ma250'])
 if __name__ == "__main__":
     indexToCode = {'沪深300':'000300.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
@@ -162,6 +162,6 @@ if __name__ == "__main__":
     calculateFinalMoneyV2(indexes)
     totalFinalMoney = functools.reduce(lambda x,y: x + y.finalMoney, indexes,0)
     print('总投入：{:^.0f} '.format(totalFinalMoney))
-    writeExcel(indexes)
+    # writeExcel(indexes)
     # print('{:^6.0f} {:^2.5f}'.format(12345,1.1234))
     # print('{:^6.0f} {:^2.5f}'.format(1, 1.1234))

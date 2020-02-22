@@ -9,15 +9,14 @@ from openpyxl.styles import Border, Side
 
 startTs = time.time()
 dir = 'C:/Users/Administrator/Desktop/'
-xlsName = '第四六八档'
+xlsName = '水口镇农保需年审人员'
 skColHead = ''
 skColValue = '水口镇'
 separateColHead = '村委'
 skColHeadIdx = 0
 separateColHeadIdx = 0
 # colHeadToWidth = {'序号':4, '公安户籍编号':10, '姓名':8, '公民身份号码':20, '户籍地址':40, '未参保原因':10}
-colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'人群类型':10,
-                 '个人缴费金额':8,'累计已缴费月数':4,'当前缴费档次':24,'实际年均缴费':10}
+colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'电话号码':12,'通讯地址':0}
 nameToColProp = {}
 for k,v in colHeadToWidth.items():
     nameToColProp[k] = Data.ColProp(k,v,remark=-1)
@@ -36,7 +35,7 @@ for v in Data.villages: #创建工作表，并保存工作表的引用。写备�
         # v.remark = v.name +'村委会'
     nameToVillage[v.remark] = v
 print(rawBook.sheetnames)
-nowSheet = rawBook.worksheets[1]
+nowSheet = rawBook.worksheets[0]
 counter = 0
 # for i in range(1,nowSheet.max_row):
 #     row = nowSheet[i] # 用下标取值效率过低，耗时是values方法的十倍，可能是因为要构造大量cell对象
@@ -78,17 +77,13 @@ for row in nowSheet.values:
     # print(row)
 
 # 边框列宽
-thin = Side(border_style="thin", color="000000")
-border = Border(left=thin, right=thin, top=thin, bottom=thin)
-for k,v in nameToVillage.items():
-    for i in range(0,len(colHeadToWidth)): #设置列宽
-        idxLetter = openpyxl.utils.get_column_letter(i+1)
-        colWidth = list(colHeadToWidth.values())
-        v.obj.column_dimensions[idxLetter].width = colWidth[i]
 
-    for r in v.obj.iter_rows(): #遍历单元格设置边框
-        for cell in r:
-            cell.border = border
+for k,v in nameToVillage.items():
+    Data.setBorderWidth(v.obj)
+#     for i in range(0,len(colHeadToWidth)): #设置列宽
+#         idxLetter = openpyxl.utils.get_column_letter(i+1)
+#         colWidth = list(colHeadToWidth.values())
+#         v.obj.column_dimensions[idxLetter].width = colWidth[i]
 
 
 print('处理了{}行数据，耗时{:.2f}秒'.format(counter,time.time() - startTs))
