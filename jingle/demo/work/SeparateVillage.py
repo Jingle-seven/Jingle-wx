@@ -9,14 +9,15 @@ from openpyxl.styles import Border, Side
 
 startTs = time.time()
 dir = 'C:/Users/Administrator/Desktop/'
-xlsName = '水口镇农保需年审人员'
+xlsName = '水口镇农保需核实是否死亡人员名单'
 skColHead = ''
 skColValue = '水口镇'
 separateColHead = '村委'
 skColHeadIdx = 0
 separateColHeadIdx = 0
+# 设置列宽是无效的
 # colHeadToWidth = {'序号':4, '公安户籍编号':10, '姓名':8, '公民身份号码':20, '户籍地址':40, '未参保原因':10}
-colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'电话号码':12,'通讯地址':0}
+colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'居住地址':0,'认证方式':14,'上次认证日期':10,'死亡日期':10}
 nameToColProp = {}
 for k,v in colHeadToWidth.items():
     nameToColProp[k] = Data.ColProp(k,v,remark=-1)
@@ -87,5 +88,5 @@ for k,v in nameToVillage.items():
 
 
 print('处理了{}行数据，耗时{:.2f}秒'.format(counter,time.time() - startTs))
-print(dir + xlsName + '-水口分村委.xlsx')
-resBook.save(dir + xlsName + '-水口分村委.xlsx')
+print(dir + xlsName + '-水口各村.xlsx')
+resBook.save(dir + xlsName + '-水口各村.xlsx')
