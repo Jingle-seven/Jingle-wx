@@ -9,7 +9,7 @@ from openpyxl.styles import Border, Side
 
 startTs = time.time()
 dir = 'C:/Users/Administrator/Desktop/'
-xlsName = '水口镇农保需核实是否死亡人员名单'
+xlsName = '农保暂停待遇需核实死亡人员名单'
 skColHead = ''
 skColValue = '水口镇'
 separateColHead = '村委'
@@ -17,7 +17,8 @@ skColHeadIdx = 0
 separateColHeadIdx = 0
 # 设置列宽是无效的
 # colHeadToWidth = {'序号':4, '公安户籍编号':10, '姓名':8, '公民身份号码':20, '户籍地址':40, '未参保原因':10}
-colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'身份证号':20,'居住地址':0,'认证方式':14,'上次认证日期':10,'死亡日期':10}
+colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'性别':8,'身份证号':20,'居住地址':0,
+                  '人社局下发火化日期（参考）':14,'人社所历年上报死亡日期（参考）':16,'死亡日期':16}
 nameToColProp = {}
 for k,v in colHeadToWidth.items():
     nameToColProp[k] = Data.ColProp(k,v,remark=-1)
@@ -78,13 +79,15 @@ for row in nowSheet.values:
     # print(row)
 
 # 边框列宽
-
+cToW = {'人社局下发火化日期（参考）':16,'人社所历年上报死亡日期（参考）':16}
 for k,v in nameToVillage.items():
-    Data.setBorderWidth(v.obj)
-#     for i in range(0,len(colHeadToWidth)): #设置列宽
-#         idxLetter = openpyxl.utils.get_column_letter(i+1)
-#         colWidth = list(colHeadToWidth.values())
-#         v.obj.column_dimensions[idxLetter].width = colWidth[i]
+    Data.setBorderWidth(v.obj,specifiedColWidth=cToW)
+    # for i in range(0,len(colHeadToWidth)): #设置特殊列列宽
+    #     idxLetter = openpyxl.utils.get_column_letter(i+1)
+    #     colHead = list(colHeadToWidth)
+    #     colWidth = list(colHeadToWidth.values())
+    #     if colHead[i] in ['人社局下发的火化日期（参考）','人社所历年上报的死亡日期（参考）']:# 指定特殊列
+    #         v.obj.column_dimensions[idxLetter].width = colWidth[i]
 
 
 print('处理了{}行数据，耗时{:.2f}秒'.format(counter,time.time() - startTs))

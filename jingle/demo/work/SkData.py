@@ -44,13 +44,14 @@ thin = Side(border_style="thin", color="000000")
 border = Border(left=thin, right=thin, top=thin, bottom=thin)
 # 如果含有以下关键词，就设置对应列宽
 colHeadToWidth = {'序号':4,'村':20,'姓名':8,'性别':4,'身份':20,'月数':8,'档次':24,'银行':20,'电话':12,'地址':20}
-def setBorderWidth(sheet,maxBorderRowNum=None):
+def setBorderWidth(sheet,maxBorderRowNum=None,specifiedColWidth=None):
+    if specifiedColWidth!=None: colHeadToWidth.update(specifiedColWidth)
     for rowI,row in enumerate(sheet):
         for cellIdx,cell in enumerate(row):
             cell.border = border # 画边框
             if rowI == 0:# 获取列头，判断该使用什么列宽
                 cp = ColProp(cell.value)
-                for k,v in colHeadToWidth.items():
+                for k,v in colHeadToWidth.items():# 遍历上方默认的列宽，如果表格里能匹配之一，那么设置列宽
                     if k in cp.head:
                         cp.len = v
                         cp.remark = openpyxl.utils.get_column_letter(cellIdx+1)
