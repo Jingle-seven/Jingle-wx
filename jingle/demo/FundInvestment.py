@@ -92,8 +92,9 @@ def calculateFinalMoneyV2(someIndexes):
         # 卖出操作置零,因为和实际操作不同.实际是卖出已投入金额的10%,20%等等
         if i.finalMoney < 0: i.finalMoney = 0
         pureFMoney = pureFMoney if pureFMoney>=0 else 0
-
-        print('{:<4}\t  {:.3f}\t  {:>3.0f}\t  {:>3.0f}'.format(i.name,i.advanceFactor,pureFMoney,i.finalMoney))
+        # : 为格式化的开始，<>^左右中对齐，>4.宽度为4的右对齐，,2f保留两位小数
+        print('{:<6}\t  {:<4.2f}\t  {:<4.2f}\t  {:^4.0f}\t  {:^8.0f}\t {:^6}'
+              .format(i.name,i.investmentFactor,i.advanceFactor,pureFMoney,i.finalMoney,i.status))
 
 
 
@@ -146,8 +147,8 @@ def getShareData(idxToMA250):
     nowDateStr = datetime.datetime.now().strftime("%Y%m%d")
     for idx in idxToMA250:
         df = tushare.pro_bar(ts_code=idx.code, asset='I',start_date='20150101', end_date=nowDateStr, ma=[250])
-        print(df.iloc[0])
-        # print(df.loc[0,'trade_date'])
+        # print(df.iloc[0])
+        print(df.loc[0,'trade_date'])
         idx.setPoint(df.loc[0,'close'],df.loc[0,'ma250'])
 if __name__ == "__main__":
     indexToCode = {'沪深300':'000300.SH','中证500':'000905.SH','基本面60':'399701.SZ','中证消费':'000932.SH'}
@@ -158,10 +159,10 @@ if __name__ == "__main__":
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
     getShareData(indexes)
-    print('指数\t','当前/年线','初步金额','考虑估值时金额')
+    print('指数  \t','当前/年线','投资因子','初步金额','考虑估值时金额','估值状态')
     calculateFinalMoneyV2(indexes)
     totalFinalMoney = functools.reduce(lambda x,y: x + y.finalMoney, indexes,0)
     print('总投入：{:^.0f} '.format(totalFinalMoney))
-    # writeExcel(indexes)
+    writeExcel(indexes)
     # print('{:^6.0f} {:^2.5f}'.format(12345,1.1234))
     # print('{:^6.0f} {:^2.5f}'.format(1, 1.1234))
