@@ -10,6 +10,7 @@ dept = None
 name = None
 
 for rowNum in range(2,sheet.max_row+1):
+
     deptCell = sheet.cell(rowNum, 1)
     nameCell = sheet.cell(rowNum, 2)
     if deptCell and deptCell.value:
