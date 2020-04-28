@@ -26,7 +26,7 @@ class IndexToMa250:
     def setPoint(self,point=1000, MA250=1000):
         self.index = point
         self.MA250 = MA250
-        self.investmentFactor = self.index*100/self.MA250 - 100 #指数与年线的差
+        self.investmentFactor = self.index*100/self.MA250 #指数与年线的比值
 
     def __str__(self):
         return '%s点数%.0f,年线%.0f'%(self.name,self.index,self.MA250)
@@ -81,19 +81,19 @@ def calculateFinalMoneyV2(someIndexes):
         pureFMoney = i.finalMoney
         i.advanceFactor = i.finalMoney / eachMoney # 替换投资因子为放大后的数据
         # 判断估值状态
-        if i.status == '低估':# 低估加50%X金额,正常减50%X金额,高估减80%X金额，X是计划每个指数要投入的金额
+        if i.status == '低估':# 低估加50%X金额,正常减20%X金额,高估减50%X金额，X是计划每个指数要投入的金额
             if i.finalMoney < 0: i.finalMoney = 0
             i.finalMoney = i.finalMoney + eachMoney*0.5
         elif i.status == '正常':
             if i.finalMoney < 0: i.finalMoney = 0
-            i.finalMoney = i.finalMoney - eachMoney * 0.5
+            i.finalMoney = i.finalMoney - eachMoney * 0.2
         elif i.status == '高估':
-            i.finalMoney = i.finalMoney - eachMoney*0.8
+            i.finalMoney = i.finalMoney - eachMoney*0.5
         # 卖出操作置零,因为和实际操作不同.实际是卖出已投入金额的10%,20%等等
         if i.finalMoney < 0: i.finalMoney = 0
         pureFMoney = pureFMoney if pureFMoney>=0 else 0
         # : 为格式化的开始，<>^左右中对齐，>4.宽度为4的右对齐，,2f保留两位小数
-        print('{:<6}\t  {:<4.2f}\t  {:<4.2f}\t  {:^4.0f}\t  {:^8.0f}\t {:^6}'
+        print('{:<6}\t  {:<4.1f}\t  {:<4.2f}\t  {:^4.0f}\t  {:^8.0f}\t {:^6}'
               .format(i.name,i.investmentFactor,i.advanceFactor,pureFMoney,i.finalMoney,i.status))
 
 
@@ -159,7 +159,7 @@ if __name__ == "__main__":
         IndexToMa250('中证消费',code='000932.SH',status='正常'),
     ]
     getShareData(indexes)
-    print('指数  \t','当前/年线','投资因子','初步金额','考虑估值时金额','估值状态')
+    print('指数\t\t','当前/年线','投资因子','初步金额','考虑估值时金额','估值状态')
     calculateFinalMoneyV2(indexes)
     totalFinalMoney = functools.reduce(lambda x,y: x + y.finalMoney, indexes,0)
     print('总投入：{:^.0f} '.format(totalFinalMoney))
