@@ -1,0 +1,207 @@
+{
+  "total": 1,
+  "records": 10,
+  "page": 1,
+  "rows": [
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "900eeb85-997f-41cf-94ea-be64a674cdd7",
+        "ITEM_CODE": "TE44028244101469445442111003005",
+        "INNER_CODE": "TE44028244101469445442111003005",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民领取养老保险待遇资格认证",
+        "ROWNUM_": 1,
+        "STATUS": "958B85A015E657FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "2",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "cc914930-f759-4042-a761-398cbee132a5",
+        "ITEM_CODE": "TE44028244101469445442111648000",
+        "INNER_CODE": "TE44028244101469445442111648000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民养老保险待遇申领",
+        "ROWNUM_": 2,
+        "STATUS": "958B859FA88257FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "2",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "c85165fb-fa8b-4723-ace3-4a228a32f4e2",
+        "ITEM_CODE": "TE44028244101469445442111662002",
+        "INNER_CODE": "TE44028244101469445442111662002",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民养老保险个人信息变更",
+        "ROWNUM_": 3,
+        "STATUS": "958B859FF04F57FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "4e5ef2a9-c887-4087-8784-0259f42f1872",
+        "ITEM_CODE": "TE44028244101469445442111666003",
+        "INNER_CODE": "TE44028244101469445442111666003",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民养老保险个人账户一次性待遇申领",
+        "ROWNUM_": 4,
+        "STATUS": "958B859FA88357FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "01030c34-e982-4169-8d10-e2bd2032898c",
+        "ITEM_CODE": "TE44028244101469445442111707000",
+        "INNER_CODE": "TE44028244101469445442111707000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民养老保险注销登记",
+        "ROWNUM_": 5,
+        "STATUS": "958B859FF05057FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "4",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "caef7a81-fc4f-4a55-8a0c-0033cca22782",
+        "ITEM_CODE": "TE44028244101469445442111750001",
+        "INNER_CODE": "TE44028244101469445442111750001",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民养老保险参保登记",
+        "ROWNUM_": 6,
+        "STATUS": "958B85A0160557FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "2",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "d9f56b91-c484-4f06-86c4-2e8e52cd420a",
+        "ITEM_CODE": "TE44028244101469445442189153000",
+        "INNER_CODE": "TE44028244101469445442189153000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民医疗保险参保缴费",
+        "ROWNUM_": 7,
+        "STATUS": "958B859FF1D557FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "b32f06bf-2ca7-4a40-a15d-d6dcfdff9c85",
+        "ITEM_CODE": "TE44028244101469445442189154000",
+        "INNER_CODE": "TE44028244101469445442189154000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民医疗保险新生儿参保缴费",
+        "ROWNUM_": 8,
+        "STATUS": "958B859FF1D657FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "3d3fff01-4553-4a72-b2cd-eec59e33e93d",
+        "ITEM_CODE": "TE44028244101469445442189155000",
+        "INNER_CODE": "TE44028244101469445442189155000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民医疗保险重复参保退费",
+        "ROWNUM_": 9,
+        "STATUS": "958B859F31E557FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    },
+    {
+      "cell": {
+        "WINDOW_ID": "AAAAAAAAAAAAAAAAAAAAAAAA00000132",
+        "ORG_NAME": "阳平镇",
+        "AREA_NAME": "阳平镇",
+        "ITEM_ID": "ea207715-3f19-45a0-8169-a9c55ee9d279",
+        "ITEM_CODE": "TE44028244101469445442189156000",
+        "INNER_CODE": "TE44028244101469445442189156000",
+        "PRIORITY": "9999",
+        "USER_NAME": "人社",
+        "ITEM_NAME": "城乡居民基本医疗保险-中途参保",
+        "ROWNUM_": 10,
+        "STATUS": "958B859F31E657FDE053898047131C2E",
+        "TOTALROW_": 10,
+        "BUSINESS_TYPE": "0",
+        "VERSION": "1",
+        "SERVICE_OBJECT_TYPE": "1,2,3",
+        "TYPE": "FW"
+      }
+    }
+  ]
+}
