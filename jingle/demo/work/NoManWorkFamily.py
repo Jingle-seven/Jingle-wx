@@ -1,5 +1,5 @@
 # coding: utf-8
-# 每月农保待遇核定名单，用来通知到龄人员来开始领取待遇，txt转excel，删掉无效人名
+# 根据贫困户名单，筛选零就业家庭
 
 import openpyxl
 import jingle.demo.work.SkData as SkData
@@ -34,7 +34,6 @@ for k,v in nameToFamily.items(): #每一户家庭
             hasLabor = True
         if row[51] != '':
             hasWork = True
-            break
     if hasLabor and not hasWork: #如果家庭有劳动力但是所有人都没工作
         for row in v: sheet1.append(row)
     if k=='户主姓名': #表头
