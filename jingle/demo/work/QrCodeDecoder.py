@@ -5,7 +5,7 @@ import pyzbar.pyzbar as pyzbar
 from PIL import Image, ImageEnhance
 
 dir = 'C:/Users/Administrator/Desktop/图片/二维码/'
-imgPath = "搜狗截图20200610115447.jpg"
+imgPath = "示例图片.jpg"
 img = Image.open(dir + imgPath)
 # img = ImageEnhance.Brightness(img).enhance(2.0)#增加亮度
 # img = ImageEnhance.Sharpness(img).enhance(17.0)#锐利化

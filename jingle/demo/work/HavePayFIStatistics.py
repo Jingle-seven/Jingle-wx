@@ -29,12 +29,12 @@ idToVillage = {}
 for v in villages:
     idToVillage[v.id] = v
 
-
-xlsName = '12月已缴农保_20191223'
+# xlsName = '12月已缴农保_20191223'
+# txtPath = dir + xlsName + '.txt'
 dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/已缴农保/'
-statisticsFileName = 'C:/Users/Administrator/Desktop/杨欢欢/新农保年已交费人员/已缴人员汇总统计表2019（全）.xlsx'
-txtPath = dir + xlsName + '.txt'
+statisticsFileName = dir + '已缴人员汇总统计表2020.xlsx'
 xsl = openpyxl.load_workbook(statisticsFileName)
+# xsl = openpyxl.Workbook()
 
 # 文件路径，写入的列
 def analyseOneFile(txtPath,colNum = 15):
@@ -56,7 +56,7 @@ def analyseOneFile(txtPath,colNum = 15):
 
     # 写入数据
     sheet = xsl.worksheets[0]
-    for rowNum in range(4,18):
+    for rowNum in range(4,18): # 按villages定义的顺序写入数据
         sheet.cell(rowNum, colNum+1).value = villages[rowNum-4].thisYearCount
         sheet.cell(rowNum+16, colNum + 1).value = villages[rowNum - 4].passYearPayCount
     # 重置计数器
@@ -64,8 +64,10 @@ def analyseOneFile(txtPath,colNum = 15):
         v.passYearPayCount = 0
         v.thisYearCount = 0
 
-for oneTxtFile in os.listdir(dir):# 每月一个文件
-    print(oneTxtFile)
-    analyseOneFile(dir + '/' + oneTxtFile,int(oneTxtFile[:2]))
+for oneTxtFile in os.listdir(dir):# 每月一个文件，oneTxtFile的文件名例子：06月已缴农保_20191223.txt
+    print(oneTxtFile,oneTxtFile[-3:],oneTxtFile[:3])
+    if oneTxtFile[-3:]== 'txt': # 如果是文本文件才解析
+        # 根据月份设置写入的行
+        analyseOneFile(dir + '/' + oneTxtFile,int(oneTxtFile[:2]))
 
 xsl.save(statisticsFileName)
