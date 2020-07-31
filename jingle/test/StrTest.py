@@ -13,3 +13,5 @@ print('可'.encode('gbk'))# utf-8保存汉字需两字节
 # 这里出现了三个字节,第一个字节应该是用来标识大小端
 print('a'.encode('utf-16'))
 print('可'.encode('utf-16'))# utf-16保存日常非ASCII字符需两字节或四字节
+a = 'a\n'
+print(repr(a),str(a))

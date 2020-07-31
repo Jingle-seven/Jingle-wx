@@ -1,5 +1,5 @@
 # coding: utf-8
-# author: xz
+# author: xz 已经从搜寻开车帖子变成了搜寻租房帖子
 
 import re, time, string, random
 import requests, bs4
@@ -15,7 +15,7 @@ HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;
            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) '
                          'AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/56.0.2924.87 Safari/537.36 OPR/43.0.2442.1144',
-           # 'Cookie':open("../../resource/douban_cookie","r").read()
+           # 'Cookie':open("../../resource/douban_cookie.txt","r").read()
            'Cookie':None
            }
 RAWHTML = """<html><head>
@@ -24,7 +24,7 @@ RAWHTML = """<html><head>
             <title>开车啦~
             </title></head><body><body/>"""
 
-# 获取页面中的标题，并进行筛选
+# 获取小组讨论中的帖子url，并对内容进行筛选，返回内容页包含特定字符的帖子url
 def filterPage(groupUrl, start):
     url = groupUrl % start
     discussPage = requests.get(url, headers=HEADERS,allow_redirects=False)
@@ -38,6 +38,7 @@ def filterPage(groupUrl, start):
         # print(i.name,i.attrs)
         detailUrl = i.attrs['href']
         time.sleep(6)  # 豆瓣爬虫要求的最低间隔为5
+        # 搜索帖子内容，包含特定字符则返回帖子url
         detailSoup = bs4.BeautifulSoup(requests.get(detailUrl,headers=HEADERS,allow_redirects=False).text, "html.parser")
         for j in detailSoup.find_all('p',
                                      class_=None,# 回复内容的标签有class，此处过滤掉回复
