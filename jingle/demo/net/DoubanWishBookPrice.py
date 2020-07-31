@@ -36,23 +36,21 @@ def scan30Books(wishBookUrl, start):
         HEADERS['Cookie'] = genBid()
     # find_all返回的是tag，name是标签名，attrs是属性字典,text是标签内字符串
     detailUrlList = listSoup.find_all('a',href=re.compile(r'https://book.douban.com/subject/\d*/'))
-    for i in range(0,5):
+    for i in range(0,1):
         aTag = detailUrlList[i]
         # print(type(aTag))
         print(aTag.name,aTag.get_text().strip(),aTag.attrs)
         detailUrl = aTag.attrs['href']
-        time.sleep(6)  # 豆瓣爬虫要求的最低间隔为5秒
+        time.sleep(1.5)  # 豆瓣爬虫要求的最低间隔为5秒,但据说1秒以上也不会被封
         detailSoup = bs4.BeautifulSoup(requests.get(detailUrl,headers=HEADERS,allow_redirects=False).text, "html.parser")
         infoDiv  = detailSoup.find_all('div',id='info')
         # infoTagToMap(infoDiv)
         buyInfo1 = detailSoup.find_all('ul',class_='bs current-version-list') # 各商城价格信息
-        buyInfo2 = detailSoup.find_all('ul', class_='secondhand-books-list bs')# 二手价格信息
-        # print([x for x in buyInfo1[0].stripped_strings])
-        print(len(buyInfo1),len(buyInfo2))
         # buyInfoToMap(buyInfo1[0])
-        for x in buyInfo2:
-            # print(x.prettify())
-            buyInfoToMap(x)
+        open("../../resource/errorPage.html", "w", encoding="utf-8").write(detailSoup.prettify())
+        allVersionUrl = detailSoup.find_all('a',href=re.compile(r'https://book.douban.com/works/\d*'))[0]
+        time.sleep(1.5)
+        print(allVersionUrl.attrs['href']) # 所有版本的页面
 
 def infoTagToMap(infoTag):
     kv = dict()
