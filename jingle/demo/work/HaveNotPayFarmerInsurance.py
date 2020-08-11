@@ -1,8 +1,9 @@
 # coding: utf-8
 # 未续缴农保名单，txt转excel，删掉0
 
-import openpyxl,os
+import openpyxl,os,time
 from openpyxl.styles import Border, Side
+import jingle.demo.work.SkData as SkData
 
 dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
 wbook = openpyxl.Workbook()
@@ -51,13 +52,45 @@ def convertOneVillage(txtFullPath,destFileName=None):
     wbook.save(destFullFilePath)
     print(destFullFilePath)
 
+def convertManyVillage(txtFullPath,destFileName=None):
+    destDir = txtFullPath.split('.')[0]
+    if not os.path.exists(destDir):
+        os.mkdir(destDir)
+    txtFile = open(txtFullPath, encoding='gbk')
+    filePath, txtName = os.path.split(txtFullPath)  # 分离路径和文件名
+    countryName = str(txtName.split('.')[0])  # 分离村名
+    tableHead = ['序号', '村委会','姓名', '身份证号', '档次（今年未交农保）', '银行账号', '已交月份']
+    for v in SkData.villages:
+        v.book = openpyxl.Workbook()
+        v.book.worksheets[0].append(tableHead)
+
+    for line in txtFile:
+        r = line.split('|')
+        if line.startswith('#'): continue
+        if r[13] == '0': continue #删掉已交0期的数据，有可能是特殊参保人群
+        # print(type(r), r[8])
+        v = SkData.idToVillage[r[8]]
+        v.count = v.count +1
+        v.book.worksheets[0].append([v.count,v.name,r[2],r[3],r[6],r[10],r[13],])
+
+    countAll = 0
+    for v in SkData.villages:
+        SkData.setBorderWidth(v.book.worksheets[0], 25) # 设置边框直到25行
+        strTime = time.strftime("%Y%m%d", time.localtime())
+        v.book.save(destDir +'/'+v.name+'未交农保'+strTime+'.xlsx')
+        countAll = countAll + v.count
+
+    print('转换了%s条数据'%countAll)
+
 if __name__ == '__main__':
-    fileName = '水口未缴农保_201912月有吴才能.txt'
+    # fileName = '水口未缴农保_201912月有吴才能.txt'
+    fileName = '水口镇未续缴农保_20200811.txt'
     # fileName = '水口镇未续缴农保_20191227'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
         for oneTxtFile in os.listdir(fullFilePath):
             convertOneVillage(fullFilePath + '/' + oneTxtFile, fileName)
     else:
-        convertOneVillage(fullFilePath)
+        # convertOneVillage(fullFilePath) # 只转换一个村，一个文本文件
+        convertManyVillage(fullFilePath)  # 转换多村，一个文本文件
     print('ok')
