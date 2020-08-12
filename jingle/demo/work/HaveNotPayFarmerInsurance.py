@@ -57,8 +57,6 @@ def convertManyVillage(txtFullPath,destFileName=None):
     if not os.path.exists(destDir):
         os.mkdir(destDir)
     txtFile = open(txtFullPath, encoding='gbk')
-    filePath, txtName = os.path.split(txtFullPath)  # 分离路径和文件名
-    countryName = str(txtName.split('.')[0])  # 分离村名
     tableHead = ['序号', '村委会','姓名', '身份证号', '档次（今年未交农保）', '银行账号', '已交月份']
     for v in SkData.villages:
         v.book = openpyxl.Workbook()
@@ -77,7 +75,7 @@ def convertManyVillage(txtFullPath,destFileName=None):
     for v in SkData.villages:
         SkData.setBorderWidth(v.book.worksheets[0], 25) # 设置边框直到25行
         strTime = time.strftime("%Y%m%d", time.localtime())
-        v.book.save(destDir +'/'+v.name+'未交农保'+strTime+'.xlsx')
+        v.book.save(destDir +'/'+v.name+'本年未交农保'+strTime+'.xlsx')
         countAll = countAll + v.count
 
     print('转换了%s条数据'%countAll)
