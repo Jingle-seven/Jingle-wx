@@ -1,3 +1,5 @@
+import time
+
 start = 0
 end = 10
 list1 = [1, 2, 3, 4, 5]
@@ -121,3 +123,12 @@ except:
     print('异常')
 finally:
     print('end')
+
+# 生成器
+def gen():
+    for i in range(0,10):
+        time.sleep(0.5)
+        yield i * 3
+print(gen,gen(),list(gen()))
+for i in gen():
+    print(i)
