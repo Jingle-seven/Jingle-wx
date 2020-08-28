@@ -17,3 +17,6 @@ print(pip.pep425tags.get_supported())
 #### is your py 32bit or 64bit
 import platform  
 print(platform.architecture())
+# Todo list
+1.IRR calculation  
+2.forget...  
