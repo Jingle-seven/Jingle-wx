@@ -49,7 +49,8 @@ def analyseOneFile(txtPath,colNum = 15):
         if '期缴' == str(recordArr[12], encoding="gbk"):
             theVillage.thisYearCount = theVillage.thisYearCount + 1
         else:
-            theVillage.passYearPayCount = theVillage.passYearPayCount + 1
+            pass # 不统计补缴
+            # theVillage.passYearPayCount = theVillage.passYearPayCount + 1
 
     for k,v in idToVillage.items():
         print(v.name, v.thisYearCount)
