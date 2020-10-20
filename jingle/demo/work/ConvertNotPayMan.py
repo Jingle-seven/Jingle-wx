@@ -6,6 +6,8 @@ from openpyxl.styles import Border, Side
 import jingle.demo.work.SkData as SkData
 
 dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
+strTime = time.strftime("%Y%m%d", time.localtime())
+
 wbook = openpyxl.Workbook()
 # sheet = wbook.create_sheet('s1')
 wbook.remove(wbook['Sheet'])# 删除默认的Sheet
@@ -57,11 +59,14 @@ def convertManyVillage(txtFullPath,destFileName=None):
     if not os.path.exists(destDir):
         os.mkdir(destDir)
     txtFile = open(txtFullPath, encoding='gbk')
-    tableHead = ['序号', '村委会','姓名', '身份证号', '档次（今年未交农保）', '银行账号', '已交月份']
+    tableHead = ['序号', '村委会','姓名', '身份证号', '档次（今年未交农保）', '银行账号', '已交月数']
     for v in SkData.villages:
-        v.book = openpyxl.Workbook()
+        v.book = openpyxl.Workbook() # 每个村单独的excel文件
         v.book.worksheets[0].append(tableHead)
+        v.sumSheet = wbook.create_sheet(v.name) # 一个excel文件，每个村一个工作表
+        v.sumSheet.append(tableHead)
 
+    # 遍历每一行
     for line in txtFile:
         r = line.split('|')
         if line.startswith('#'): continue
@@ -69,20 +74,24 @@ def convertManyVillage(txtFullPath,destFileName=None):
         # print(type(r), r[8])
         v = SkData.idToVillage[r[8]]
         v.count = v.count +1
-        v.book.worksheets[0].append([v.count,v.name,r[2],r[3],r[6],r[10],r[13],])
+        bankAccount = '未绑定'
+        if r[10]:
+            bankAccount = '***' + r[10][-5:-1]
+        v.book.worksheets[0].append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],bankAccount,r[13],])
+        v.sumSheet.append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],bankAccount,r[13],])
 
     countAll = 0
     for v in SkData.villages:
         SkData.setBorderWidth(v.book.worksheets[0], 25) # 设置边框直到25行
-        strTime = time.strftime("%Y%m%d", time.localtime())
+        SkData.setBorderWidth(v.sumSheet, 25)  # 设置边框直到25行
         v.book.save(destDir +'/'+v.name+'本年未交农保'+strTime+'.xlsx')
         countAll = countAll + v.count
-
+    wbook.save(destDir +'/水口镇各村本年未续交农保'+strTime+'.xlsx')
     print('转换了%s条数据'%countAll)
 
 if __name__ == '__main__':
     # fileName = '水口未缴农保_201912月有吴才能.txt'
-    fileName = '水口镇未续缴农保_20200903.txt'
+    fileName = '水口镇未续缴农保_20201018.txt'
     # fileName = '水口镇未续缴农保_20191227'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
