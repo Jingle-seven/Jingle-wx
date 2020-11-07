@@ -66,7 +66,7 @@ def analyseOneFile(txtPath,colNum = 15):
         v.thisYearCount = 0
 
 for oneTxtFile in os.listdir(dir):# 每月一个文件，oneTxtFile的文件名例子：06月已缴农保_20191223.txt
-    print(oneTxtFile,oneTxtFile[-3:],oneTxtFile[:3])
+    # print(oneTxtFile,oneTxtFile[-3:],oneTxtFile[:3])
     if oneTxtFile[-3:]== 'txt': # 如果是文本文件才解析
         # 根据月份设置写入的行
         analyseOneFile(dir + '/' + oneTxtFile,int(oneTxtFile[:2]))

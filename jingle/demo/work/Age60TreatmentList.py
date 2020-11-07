@@ -4,9 +4,9 @@
 import openpyxl
 import jingle.demo.work.SkData as SkData
 
-tableHead = ['序号','村（社区）名称','姓名','公民身份号码','性别','已缴费月数','当前缴费档次']
+tableHead = ['序号','村委','姓名','公民身份号码','性别','已缴费月数','当前缴费档次','是否购买职工社保']
 escapeNames = ['戴金兰','谭大妹','钟达海','陈如章','刘荣','李英山','戴东北','蓝善付']
-xlsName = '农保待遇核定_20201011'
+xlsName = '农保待遇核定_20201103'
 dir = 'C:/Users/Administrator/Desktop/农保/农保每月待遇核定/'
 txtPath = dir + xlsName + '.txt'
 txtFile = open(txtPath,encoding='gbk')
@@ -39,7 +39,7 @@ for line in txtFile:
     if rowNum == 2:#表头行不解析
         rowNum  = rowNum + 1
         continue
-    row = [rowNum-2,x[4].replace('南雄市水口镇',''),x[5],x[6],x[7],x[15],x[17],]
+    row = [rowNum-2,x[4].replace('南雄市水口镇',''),x[5],x[6],x[7],x[15],x[17],'否']
     print(row)
     birthYear = int(row[3][6:10])
     monthToBePaid = (birthYear - 1950) * 12

@@ -77,7 +77,7 @@ def convertManyVillage(txtFullPath,destFileName=None):
         bankAccount = '未绑定'
         if r[10]:
             bankAccount = '***' + r[10][-5:-1]
-        v.book.worksheets[0].append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],bankAccount,r[13],])
+        v.book.worksheets[0].append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],r[10],r[13],]) # 单独村文件不打码银行账号，方便村干部代存钱
         v.sumSheet.append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],bankAccount,r[13],])
 
     countAll = 0
@@ -91,7 +91,7 @@ def convertManyVillage(txtFullPath,destFileName=None):
 
 if __name__ == '__main__':
     # fileName = '水口未缴农保_201912月有吴才能.txt'
-    fileName = '水口镇未续缴农保_20201018.txt'
+    fileName = '水口镇未续缴农保_20201105.txt'
     # fileName = '水口镇未续缴农保_20191227'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
