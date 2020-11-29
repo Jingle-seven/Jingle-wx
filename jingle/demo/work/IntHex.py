@@ -10,6 +10,8 @@
 #s = input("请输入代码： ")
 # print('10' in str)
 # print({}.update(None))
-a = [1,2,3] #index 0,1,2
-a.insert(3,'x')
-print(a)
+# a = [1,2,3] #index 0,1,2
+# a.insert(3,'x')
+# print(a)
+s = '123456789'
+print(s.replace('1','').replace('2',''))

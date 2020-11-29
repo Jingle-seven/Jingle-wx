@@ -9,8 +9,18 @@ dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
 strTime = time.strftime("%Y%m%d", time.localtime())
 
 wbook = openpyxl.Workbook()
-# sheet = wbook.create_sheet('s1')
 wbook.remove(wbook['Sheet'])# 删除默认的Sheet
+idToAddress  = {} #地址信息
+def readIdToAddressInfo():
+    kv = dict()
+    villageBook = openpyxl.load_workbook('C:/Users/Administrator/Desktop/常用文件/部门数据.xlsx')
+    for row in villageBook.worksheets[0].values:
+        address = row[0]
+        if len(address.split('村委会'))<2:
+            continue
+        kv[row[6]] = address.split('村委会')[1]
+    return kv
+
 def convertOneVillage(txtFullPath,destFileName=None):
     # txtPath = dir + countryName +'.txt'
     txtFile = open(txtFullPath, encoding='gbk')
@@ -54,12 +64,12 @@ def convertOneVillage(txtFullPath,destFileName=None):
     wbook.save(destFullFilePath)
     print(destFullFilePath)
 
-def convertManyVillage(txtFullPath,destFileName=None):
+def convertManyVillage(txtFullPath):
     destDir = txtFullPath.split('.')[0]
     if not os.path.exists(destDir):
         os.mkdir(destDir)
     txtFile = open(txtFullPath, encoding='gbk')
-    tableHead = ['序号', '村委会','姓名', '身份证号', '档次（今年未交农保）', '银行账号', '已交月数']
+    tableHead = ['序号', '村委会','姓名', '身份证号', '未交农保档次', '银行账号', '已交月数','村小组']
     for v in SkData.villages:
         v.book = openpyxl.Workbook() # 每个村单独的excel文件
         v.book.worksheets[0].append(tableHead)
@@ -75,10 +85,12 @@ def convertManyVillage(txtFullPath,destFileName=None):
         v = SkData.idToVillage[r[8]]
         v.count = v.count +1
         bankAccount = '未绑定'
+        address = idToAddress.get(r[3],'未找到')
+        stage = r[6].replace('按年缴费第','').replace(':','')
         if r[10]:
             bankAccount = '***' + r[10][-5:-1]
-        v.book.worksheets[0].append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],r[10],r[13],]) # 单独村文件不打码银行账号，方便村干部代存钱
-        v.sumSheet.append([v.count,v.name,r[2],r[3][0:10]+'***',r[6],bankAccount,r[13],])
+        v.book.worksheets[0].append([v.count,v.name,r[2],r[3],stage,r[10],r[13],address]) # 单独村文件不打码银行账号，方便村干部代存钱
+        v.sumSheet.append([v.count,v.name,r[2],r[3][0:10]+'***',stage,bankAccount,r[13],address])
 
     countAll = 0
     for v in SkData.villages:
@@ -90,9 +102,10 @@ def convertManyVillage(txtFullPath,destFileName=None):
     print('转换了%s条数据'%countAll)
 
 if __name__ == '__main__':
-    # fileName = '水口未缴农保_201912月有吴才能.txt'
-    fileName = '水口镇未续缴农保_20201105.txt'
-    # fileName = '水口镇未续缴农保_20191227'
+    print('启动')
+    idToAddress = readIdToAddressInfo() # 读取地址信息
+    print('读取地址完毕')
+    fileName = '水口镇未续缴农保_20201123.txt'
     fullFilePath = dir + fileName
     if os.path.isdir(fullFilePath): # 如果是目录，遍历目录下的所有文件转成excel
         for oneTxtFile in os.listdir(fullFilePath):
@@ -100,4 +113,4 @@ if __name__ == '__main__':
     else:
         # convertOneVillage(fullFilePath) # 只转换一个村，一个文本文件
         convertManyVillage(fullFilePath)  # 转换多村，一个文本文件
-    print('ok')
+    print('完成')
