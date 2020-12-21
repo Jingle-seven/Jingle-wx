@@ -45,10 +45,10 @@ class ColProp:
 thin = Side(border_style="thin", color="000000")
 border = Border(left=thin, right=thin, top=thin, bottom=thin)
 # 如果含有以下关键词，就设置对应列宽
-colHeadToWidth = {'序号':4,'村':5,'姓名':8,'性别':4,'身份':20,'月数':6,'档次':12,'银行':20,'电话':12,'地址':20,
+colHeadToWidth = {'序号':4,'村':12,'姓名':8,'性别':4,'身份':20,'月数':6,'档次':12,'银行':20,'电话':12,'地址':20,
                   '6':6,'10':10,'16':16,'20':20}
 def setBorderWidth(sheet,maxBorderRowNum=None,specifiedColWidth=None):
-    if specifiedColWidth!=None: colHeadToWidth.update(specifiedColWidth)
+    if specifiedColWidth!=None: specifiedColWidth.update(colHeadToWidth)
     for rowI,row in enumerate(sheet):
         for cellIdx,cell in enumerate(row):
             cell.border = border # 画边框
@@ -59,6 +59,12 @@ def setBorderWidth(sheet,maxBorderRowNum=None,specifiedColWidth=None):
                         cp.len = v
                         cp.remark = openpyxl.utils.get_column_letter(cellIdx+1)
                         sheet.column_dimensions[cp.remark].width = cp.len
+                        # print(cp.head,cp.len)
+                # for k,v in specifiedColWidth.items():# 遍历指定的列宽，有指定的话就覆盖默认列宽
+                #     if k in cp.head:
+                #         cp.len = v
+                #         cp.remark = openpyxl.utils.get_column_letter(cellIdx+1)
+                #         sheet.column_dimensions[cp.remark].width = cp.len
                         # print(cp.head,cp.len)
 
 

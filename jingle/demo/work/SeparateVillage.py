@@ -8,15 +8,16 @@ from openpyxl.styles import Border, Side
 
 
 startTs = time.time()
-dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
-xlsName = '水口镇60岁以下未农保开户人员'
+# dir = 'C:/Users/Administrator/Desktop/农保未续缴明细/'
+dir='C:/Users/Administrator/Desktop/'
+xlsName = '水口镇上年已参本年未参医保名单1206'
 skColHead = ''
 skColValue = '水口镇'
-separateColHead = '村委'
+separateColHead = '社区村'
 skColHeadIdx = 0
 separateColHeadIdx = 0
 # 此处设置列宽已经无效的，要在文件末尾单独设置
-colHeadToWidth = {'序号':4, '姓名':8, '身份证号':10, '性别':6, '年龄':4, '户籍地':40,'村委':20}
+colHeadToWidth = {'序号':4, '公安户籍编号':9, '姓名':10, '公民身份号码':6, '户籍地址':20, '社区村':20,'本年度不参保原因':24}
 # colHeadToWidth = {'序号':4,'村委':20,'姓名':8,'性别':8,'身份证号':20,'居住地址':0,
 #                   '人社局下发火化日期（参考）':14,'人社所历年上报死亡日期（参考）':16,'死亡日期':16}
 nameToColProp = {}
@@ -31,9 +32,9 @@ for v in Data.villages: #创建工作表，并保存工作表的引用。写备�
     v.obj = resBook.create_sheet(v.name)
     v.obj.append(list(colHeadToWidth.keys())) #表头
     if v.name == '社区':
-        v.remark = '水口社区'#这个标记根据待处理文件中的居委具体名称而定
+        v.remark = '水口社区居委会'#这个标记根据待处理文件中的居委具体名称而定
     else:
-        v.remark = v.name +'村委'#这个标记根据待处理文件中村委的具体名称而定
+        v.remark = v.name +'村委会'#这个标记根据待处理文件中村委的具体名称而定
         # v.remark = v.name +'村委会'
     nameToVillage[v.remark] = v
 print(rawBook.sheetnames)
@@ -61,6 +62,7 @@ for row in nowSheet.values:
     # 或者设置了，并且是水口镇，将数据写入到对应村委工作表
     if len(skColHead)==0 or row[skColHeadIdx].find(skColValue) >= 0:
         try:#
+            # print(row[separateColHeadIdx])
             village = nameToVillage[row[separateColHeadIdx]]
         except Exception as e:
             continue
@@ -79,15 +81,9 @@ for row in nowSheet.values:
     # print(row)
 
 # 设置边框和列宽
-cToW = {'身份证号':14,'户籍地':22,'年龄':4}
+cToW = {'身份证号':14,'户籍地':22,'本年度不参保原因':12}
 for k,v in nameToVillage.items():
     Data.setBorderWidth(v.obj,specifiedColWidth=cToW)
-    # for i in range(0,len(colHeadToWidth)): #设置特殊列列宽
-    #     idxLetter = openpyxl.utils.get_column_letter(i+1)
-    #     colHead = list(colHeadToWidth)
-    #     colWidth = list(colHeadToWidth.values())
-    #     if colHead[i] in ['人社局下发的火化日期（参考）','人社所历年上报的死亡日期（参考）']:# 指定特殊列
-    #         v.obj.column_dimensions[idxLetter].width = colWidth[i]
 
 
 print('处理了{}行数据，耗时{:.2f}秒'.format(counter,time.time() - startTs))
