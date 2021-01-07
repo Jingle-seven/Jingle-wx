@@ -14,7 +14,7 @@ tushare==1.2.43 # 获取金融数据的库,开源地址：https://github.com/wad
         #pip安装此货的时候不会自动安装此货所需要的依赖，只会报错需要手动安装，麻烦得一比
         #依赖包括pandas,requests，lxml，simplejson，msgpack，msgpack，ta-lib,
         #其中ta-lib不能用pip自动安装，要到https://www.lfd.uci.edu/~gohlke/pythonlibs/#ta-lib下载合适的版本再用pip手动安装
-lxml==4.4.1 # tushare的依赖
+lxml==4.6.2 # tushare的依赖
 pandas==0.25.3  # tushare的依赖
 pyzbar==0.1.8 #解析二维码
 
